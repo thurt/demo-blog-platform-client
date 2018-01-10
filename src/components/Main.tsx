@@ -4,11 +4,11 @@ import {Homepage} from './Homepage';
 import {Setup} from './Setup';
 import {api} from '../api';
 
-interface MainState {
+interface State {
   isSetup: boolean;
 }
 
-export class Main extends React.Component<{}, MainState> {
+export class Main extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
