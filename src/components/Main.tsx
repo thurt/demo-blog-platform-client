@@ -28,6 +28,7 @@ export class Main extends React.Component<{}, MainState> {
     render() { 
         return (
             <div>
+            <h1>Demo Blog Platform</h1>
                 {this.state.isSetup ? <Homepage /> : <Setup />}
             </div>
         )
