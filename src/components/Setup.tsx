@@ -1,7 +1,13 @@
 import * as React from 'react';
+import {MainContext} from './Main';
+import * as NotificationSystem from 'react-notification-system';
 
-export class Setup extends React.Component<{}, {}> {
-  constructor(props: {}) {
+interface Props {
+  toast: NotificationSystem.System;
+}
+
+export class Setup extends React.Component<Props, {}> {
+  constructor(props: Props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -21,6 +27,11 @@ export class Setup extends React.Component<{}, {}> {
       );
     }
     alert('Your submission\n' + id.value + ':' + password.value);
+    this.props.toast.addNotification({
+      title: 'Success!',
+      message: 'Admin Account created',
+      level: 'success',
+    });
   }
 
   render() {

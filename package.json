@@ -5,9 +5,11 @@
   "dependencies": {
     "@types/react": "^16.0.34",
     "@types/react-dom": "^16.0.3",
+    "@types/react-notification-system": "^0.2.35",
     "cms-client-api": "github:thurt/cms-client-api",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-notification-system": "^0.2.16"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.1",
