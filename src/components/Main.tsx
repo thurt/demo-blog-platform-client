@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {CmsApi} from 'typescript-fetch-api';
 import {Homepage} from './Homepage';
 import {Setup} from './Setup';
 import {api} from '../api';
