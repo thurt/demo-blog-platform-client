@@ -29,12 +29,7 @@ export class Main extends React.Component<{}, State> {
       // using type guard to notify tsc that isSetup is actually a boolean even though isSetup() is typed to return "{value: boolean}".
       // there is a bug in the server package grpc-gateway that does not handle well-known types from protobuf/wrappers.proto properly
       if (typeof isSetup !== 'boolean') {
-        window.Notify.addNotification({
-          title: 'Server Error',
-          message: 'Sorry, the server returned an unexpected format.',
-          level: 'error',
-        });
-        console.error(
+        api.handleError(
           new Error(
             'want "isSetup" to be typeof boolean, got typeof ' + typeof isSetup,
           ),
