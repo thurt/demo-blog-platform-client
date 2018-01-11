@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as NotificationSystem from 'react-notification-system';
 import * as api from '../api';
 import * as cms from 'cms-client-api';
+import * as form from '../form';
 
 interface Props {
   notifier: NotificationSystem.System;
@@ -17,14 +18,11 @@ export class Setup extends React.Component<Props, {}> {
     event.preventDefault();
 
     // disable form inputs while submitting
-    const ins = Array.from(event.currentTarget.getElementsByTagName('input'));
-    for (let i of ins) {
-      i.setAttribute('disabled', 'true');
-    }
+    form.disableInputs(event.currentTarget);
 
     // get values of form
-    const id = ins.find(i => i.name === 'id').value;
-    const password = ins.find(i => i.name === 'password').value;
+    const id = form.getInputByName(event.currentTarget, 'id');
+    const password = form.getInputByName(event.currentTarget, 'password');
     if (typeof id !== 'string') {
       throw new Error('want "id" typeof string, got ' + typeof id);
     }
@@ -77,9 +75,7 @@ export class Setup extends React.Component<Props, {}> {
           });
       }
       // enable the form again
-      for (let i of ins) {
-        i.removeAttribute('disabled');
-      }
+      form.enableInputs(event.currentTarget)
     }
   }
 
