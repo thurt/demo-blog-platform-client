@@ -45,37 +45,8 @@ export class Setup extends React.Component<Props, {}> {
         level: 'success',
       });
     } catch (errRes) {
-      if (errRes instanceof Error) {
-        console.error(errRes);
-        this.props.notifier.addNotification({
-          title: 'Server Error',
-          message:
-            'Sorry, something went wrong when trying to communicate with the server. Please try again later.',
-          level: 'error',
-        });
-      }
-      if (errRes instanceof Response) {
-        errRes
-          .json()
-          .then((e: api.apiError) =>
-            this.props.notifier.addNotification({
-              title: errRes.statusText,
-              message: e.error,
-              level: 'error',
-            }),
-          )
-          .catch(e => {
-            console.error(e);
-            this.props.notifier.addNotification({
-              title: 'Server Error',
-              message:
-                'Sorry, something went wrong when trying to communicate with the server. Please try again later.',
-              level: 'error',
-            });
-          });
-      }
       // enable the form again
-      form.enableInputs(event.currentTarget)
+      form.enableInputs(event.currentTarget);
     }
   }
 
