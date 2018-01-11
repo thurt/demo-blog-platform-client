@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as NotificationSystem from 'react-notification-system';
+import * as api from '../api';
+import * as cms from 'cms-client-api';
 
 interface Props {
   notifier: NotificationSystem.System;
@@ -11,26 +13,74 @@ export class Setup extends React.Component<Props, {}> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const id = event.currentTarget.elements.namedItem('id');
-    if (!(id instanceof HTMLInputElement)) {
-      throw new Error(
-        'want form element named "id" to be instanceof HTMLInputElement',
-      );
+
+    // disable form inputs while submitting
+    const ins = Array.from(event.currentTarget.getElementsByTagName('input'));
+    for (let i of ins) {
+      i.setAttribute('disabled', 'true');
     }
-    const password = event.currentTarget.elements.namedItem('password');
-    if (!(password instanceof HTMLInputElement)) {
-      throw new Error(
-        'want form element named "password" to be instanceof HTMLInputElement',
-      );
+
+    // get values of form
+    const id = ins.find(i => i.name === 'id').value;
+    const password = ins.find(i => i.name === 'password').value;
+    if (typeof id !== 'string') {
+      throw new Error('want "id" typeof string, got ' + typeof id);
     }
-    alert('Your submission\n' + id.value + ':' + password.value);
-    this.props.notifier.addNotification({
-      title: 'Success!',
-      message: 'Admin Account created',
-      level: 'success',
-    });
+    if (typeof password !== 'string') {
+      throw new Error('want "password" typeof string, got ' + typeof password);
+    }
+
+    // create request obj from form values
+    const r = {
+      id,
+      password,
+    };
+
+    // submit values
+    try {
+      const res = await api.request.setup({body: r});
+      this.props.notifier.addNotification({
+        title: 'Success!',
+        message: 'Admin account created',
+        level: 'success',
+      });
+    } catch (errRes) {
+      if (errRes instanceof Error) {
+        console.error(errRes);
+        this.props.notifier.addNotification({
+          title: 'Server Error',
+          message:
+            'Sorry, something went wrong when trying to communicate with the server. Please try again later.',
+          level: 'error',
+        });
+      }
+      if (errRes instanceof Response) {
+        errRes
+          .json()
+          .then((e: api.apiError) =>
+            this.props.notifier.addNotification({
+              title: errRes.statusText,
+              message: e.error,
+              level: 'error',
+            }),
+          )
+          .catch(e => {
+            console.error(e);
+            this.props.notifier.addNotification({
+              title: 'Server Error',
+              message:
+                'Sorry, something went wrong when trying to communicate with the server. Please try again later.',
+              level: 'error',
+            });
+          });
+      }
+      // enable the form again
+      for (let i of ins) {
+        i.removeAttribute('disabled');
+      }
+    }
   }
 
   render() {
@@ -43,12 +93,12 @@ export class Setup extends React.Component<Props, {}> {
           }
         </p>
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Id: <input name="id" type="text" />
-          </label>
-          <label>
-            Password: <input name="password" type="password" />
-          </label>
+          <label>Id: </label>
+          <input name="id" type="text" />
+
+          <label>Password: </label>
+          <input name="password" type="password" />
+
           <input type="submit" value="Create Account" />
         </form>
       </div>

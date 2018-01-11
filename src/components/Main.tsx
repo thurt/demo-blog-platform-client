@@ -2,17 +2,12 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {Homepage} from './Homepage';
 import {Setup} from './Setup';
-import {api} from '../api';
+import * as api from '../api';
 import * as cms from 'cms-client-api';
 import * as NotificationSystem from 'react-notification-system';
 
 interface State {
   isSetup: boolean;
-}
-
-interface CmsApiError {
-  error: string;
-  code: number;
 }
 
 export class Main extends React.Component<{}, State> {
@@ -27,7 +22,7 @@ export class Main extends React.Component<{}, State> {
   }
 
   componentDidMount() {
-    api
+    api.request
       .isSetup()
       .then(isSetup => {
         if (typeof isSetup !== 'boolean') {
@@ -49,10 +44,10 @@ export class Main extends React.Component<{}, State> {
       .catch((errResp: Response) => {
         errResp
           .json()
-          .then((resp: CmsApiError) => {
+          .then((e: api.apiError) => {
             this.notifier.addNotification({
               title: errResp.statusText,
-              message: resp.error,
+              message: e.error,
               level: 'error',
             });
           })
