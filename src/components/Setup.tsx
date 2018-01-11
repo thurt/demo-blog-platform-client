@@ -12,13 +12,14 @@ export class Setup extends React.Component<{}, {}> {
 
   async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const f = event.currentTarget;
 
     // disable form inputs while submitting
     form.disableInputs(event.currentTarget);
 
     // get values of form
-    const id = form.getInputByName(event.currentTarget, 'id').value;
-    const password = form.getInputByName(event.currentTarget, 'password').value;
+    const id = form.getInputByName(f, 'id').value;
+    const password = form.getInputByName(f, 'password').value;
     if (typeof id !== 'string') {
       throw new Error('want "id" typeof string, got ' + typeof id);
     }
@@ -32,16 +33,18 @@ export class Setup extends React.Component<{}, {}> {
       password,
     };
 
-    // submit values
-    const res = await api.request
-      .setup({body: r})
-      .catch(api.handleError)
-      .then(_ => form.enableInputs(event.currentTarget)); // re-enable inputs after handling an error
-    window.Notify.addNotification({
-      title: 'Success!',
-      message: 'Admin account created',
-      level: 'success',
-    });
+    try {
+      // submit values
+      await api.request.setup({body: r});
+      window.Notify.addNotification({
+        title: 'Success!',
+        message: 'Admin account created',
+        level: 'success',
+      });
+    } catch (e) {
+      api.handleError(e);
+      form.enableInputs(f); // re-enable inputs after handling an error
+    }
   }
 
   render() {
