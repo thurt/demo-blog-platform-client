@@ -21,8 +21,8 @@ export class Setup extends React.Component<Props, {}> {
     form.disableInputs(event.currentTarget);
 
     // get values of form
-    const id = form.getInputByName(event.currentTarget, 'id');
-    const password = form.getInputByName(event.currentTarget, 'password');
+    const id = form.getInputByName(event.currentTarget, 'id').value;
+    const password = form.getInputByName(event.currentTarget, 'password').value;
     if (typeof id !== 'string') {
       throw new Error('want "id" typeof string, got ' + typeof id);
     }
