@@ -11,4 +11,35 @@ interface apiError {
   code: number;
 }
 
-export {request, apiError};
+function handleError(e: Error | Response) {
+  if (e instanceof Error) {
+    console.error(e);
+    this.props.notifier.addNotification({
+      title: 'Server Error',
+      message:
+        'Sorry, something went wrong when trying to communicate with the server. Please try again later.',
+      level: 'error',
+    });
+  }
+  if (e instanceof Response) {
+    e
+      .json()
+      .then((apie: apiError) =>
+        this.props.notifier.addNotification({
+          title: e.statusText,
+          message: apie.error,
+          level: 'error',
+        }),
+      )
+      .catch(parsee => {
+        console.error(parsee);
+        this.props.notifier.addNotification({
+          title: 'Server Error',
+          message:
+            'Sorry, something went wrong when trying to communicate with the server. Please try again later.',
+          level: 'error',
+        });
+      });
+  }
+}
+export {request, apiError, handleError};
