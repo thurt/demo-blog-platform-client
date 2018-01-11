@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as NotificationSystem from 'react-notification-system';
 
 interface Props {
-  toast: NotificationSystem.System;
+  notifier: NotificationSystem.System;
 }
 
 export class Setup extends React.Component<Props, {}> {
@@ -26,7 +26,7 @@ export class Setup extends React.Component<Props, {}> {
       );
     }
     alert('Your submission\n' + id.value + ':' + password.value);
-    this.props.toast.addNotification({
+    this.props.notifier.addNotification({
       title: 'Success!',
       message: 'Admin Account created',
       level: 'success',

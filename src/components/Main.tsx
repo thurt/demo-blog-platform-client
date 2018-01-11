@@ -74,7 +74,7 @@ export class Main extends React.Component<{}, State> {
           ref={(n: NotificationSystem.System) => (this.notifier = n)}
         />
         <h1>Demo Blog Platform</h1>
-        {this.state.isSetup ? <Homepage /> : <Setup toast={this.notifier} />}
+        {this.state.isSetup ? <Homepage /> : <Setup notifier={this.notifier} />}
       </div>
     );
   }
