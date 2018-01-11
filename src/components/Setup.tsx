@@ -37,17 +37,15 @@ export class Setup extends React.Component<Props, {}> {
     };
 
     // submit values
-    try {
-      const res = await api.request.setup({body: r});
-      this.props.notifier.addNotification({
-        title: 'Success!',
-        message: 'Admin account created',
-        level: 'success',
-      });
-    } catch (errRes) {
-      // enable the form again
-      form.enableInputs(event.currentTarget);
-    }
+    const res = await api.request
+      .setup({body: r})
+      .catch(api.handleError)
+      .then(_ => form.enableInputs(event.currentTarget)); // re-enable inputs after handling an error
+    this.props.notifier.addNotification({
+      title: 'Success!',
+      message: 'Admin account created',
+      level: 'success',
+    });
   }
 
   render() {
