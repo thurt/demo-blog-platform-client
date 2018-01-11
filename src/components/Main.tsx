@@ -20,29 +20,24 @@ export class Main extends React.Component<{}, State> {
     this.notifier = null;
   }
 
-  componentDidMount() {
-    api.request
-      .isSetup()
-      .then(isSetup => {
-        if (typeof isSetup !== 'boolean') {
-          this.notifier.addNotification({
-            title: 'Server Error',
-            message: 'Sorry, the server returned an unexpected format.',
-            level: 'error',
-          });
-          console.error(
-            new Error(
-              'want "isSetup" to be typeof boolean, got typeof ' +
-                typeof isSetup,
-            ),
-          );
-          return;
-        }
-        this.setState({isSetup});
-      })
-      .catch(e => {
-        api.handleError(e);
+  async componentDidMount() {
+    const isSetup = await api.request.isSetup().catch(api.handleError);
+    // using type guard to notify tsc that isSetup is actually a boolean even though isSetup() is typed to return "{value: boolean}".
+    // there is a bug in the server package grpc-gateway that does not handle well-known types from protobuf/wrappers.proto properly
+    if (typeof isSetup !== 'boolean') {
+      this.notifier.addNotification({
+        title: 'Server Error',
+        message: 'Sorry, the server returned an unexpected format.',
+        level: 'error',
       });
+      console.error(
+        new Error(
+          'want "isSetup" to be typeof boolean, got typeof ' + typeof isSetup,
+        ),
+      );
+      return;
+    }
+    this.setState({isSetup});
   }
 
   render() {
