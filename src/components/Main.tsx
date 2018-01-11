@@ -3,56 +3,78 @@ import * as ReactDOM from 'react-dom';
 import {Homepage} from './Homepage';
 import {Setup} from './Setup';
 import {api} from '../api';
+import * as cms from 'cms-client-api';
 import * as NotificationSystem from 'react-notification-system';
 
 interface State {
   isSetup: boolean;
 }
 
-export interface MainContext {
-  aprop: string;
+interface CmsApiError {
+  error: string;
+  code: number;
 }
 
 export class Main extends React.Component<{}, State> {
-  _notificationSystem: NotificationSystem.System;
+  notifier: NotificationSystem.System;
 
   constructor(props: {}) {
     super(props);
     this.state = {
       isSetup: false,
     };
-    this._notificationSystem = null;
+    this.notifier = null;
   }
 
   componentDidMount() {
-    if (this._notificationSystem != null) {
-      this._notificationSystem.addNotification({
-        title: 'Success!',
-        message: 'notification message',
-        level: 'success',
-      });
-    }
     api
       .isSetup()
       .then(isSetup => {
-        this.setState({isSetup: Boolean(isSetup)});
-        return isSetup;
+        if (typeof isSetup !== 'boolean') {
+          this.notifier.addNotification({
+            title: 'Server Error',
+            message: 'Sorry, the server returned an unexpected format.',
+            level: 'error',
+          });
+          console.trace(
+            new Error(
+              'want "isSetup" to be typeof boolean, got typeof ' +
+                typeof isSetup,
+            ),
+          );
+          return;
+        }
+        this.setState({isSetup});
       })
-      .catch(err => console.error('encountered error:', err));
+      .catch((errResp: Response) => {
+        errResp
+          .json()
+          .then((resp: CmsApiError) => {
+            this.notifier.addNotification({
+              title: errResp.statusText,
+              message: resp.error,
+              level: 'error',
+            });
+          })
+          .catch(_ => {
+            this.notifier.addNotification({
+              title: 'Server Error',
+              message:
+                'Sorry, the server returned a format that could not be parsed.',
+              level: 'error',
+            });
+          });
+      });
   }
 
   render() {
     return (
       <div>
         <NotificationSystem
-          ref={(n: NotificationSystem.System) => (this._notificationSystem = n)}
+          ref={(n: NotificationSystem.System) => (this.notifier = n)}
         />
         <h1>Demo Blog Platform</h1>
-        {this.state.isSetup ? (
-          <Homepage />
-        ) : (
-          <Setup toast={this._notificationSystem} />
-        )}
+        {this.state.isSetup ? <Homepage /> : <Setup toast={this.notifier} />}
       </div>
     );
   }

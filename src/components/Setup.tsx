@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {MainContext} from './Main';
 import * as NotificationSystem from 'react-notification-system';
 
 interface Props {
