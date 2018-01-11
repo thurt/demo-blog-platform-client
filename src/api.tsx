@@ -1,6 +1,6 @@
 import * as swaggerClient from 'cms-client-api';
 
-const request = swaggerClient.CmsApiFactory(
+export const request = swaggerClient.CmsApiFactory(
   undefined,
   'http://172.17.0.1:8282',
 );
@@ -11,7 +11,7 @@ interface apiError {
   code: number;
 }
 
-function handleError(e: Error | Response) {
+export function handleError(e: Error | Response) {
   if (e instanceof Error) {
     console.error(e);
     window.Notify.addNotification({
@@ -42,4 +42,3 @@ function handleError(e: Error | Response) {
       });
   }
 }
-export {request, apiError, handleError};
