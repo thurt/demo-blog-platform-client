@@ -1,3 +1,5 @@
+// form module includes methods for working with HTML forms
+
 export function disableInputs(f: HTMLFormElement) {
   const ins = Array.from(f.getElementsByTagName('input'));
   for (let i of ins) {
