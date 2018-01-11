@@ -4,12 +4,8 @@ import * as api from '../api';
 import * as cms from 'cms-client-api';
 import * as form from '../form';
 
-interface Props {
-  notifier: NotificationSystem.System;
-}
-
-export class Setup extends React.Component<Props, {}> {
-  constructor(props: Props) {
+export class Setup extends React.Component<{}, {}> {
+  constructor(props: {}) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -41,7 +37,7 @@ export class Setup extends React.Component<Props, {}> {
       .setup({body: r})
       .catch(api.handleError)
       .then(_ => form.enableInputs(event.currentTarget)); // re-enable inputs after handling an error
-    this.props.notifier.addNotification({
+    window.Notify.addNotification({
       title: 'Success!',
       message: 'Admin account created',
       level: 'success',

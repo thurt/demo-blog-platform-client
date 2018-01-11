@@ -5,19 +5,22 @@ import {Setup} from './Setup';
 import * as api from '../api';
 import * as NotificationSystem from 'react-notification-system';
 
+declare global {
+  interface Window {
+    Notify: NotificationSystem.System;
+  }
+}
+
 interface State {
   isSetup: boolean;
 }
 
 export class Main extends React.Component<{}, State> {
-  notifier: NotificationSystem.System;
-
   constructor(props: {}) {
     super(props);
     this.state = {
       isSetup: false,
     };
-    this.notifier = null;
   }
 
   async componentDidMount() {
@@ -25,7 +28,7 @@ export class Main extends React.Component<{}, State> {
     // using type guard to notify tsc that isSetup is actually a boolean even though isSetup() is typed to return "{value: boolean}".
     // there is a bug in the server package grpc-gateway that does not handle well-known types from protobuf/wrappers.proto properly
     if (typeof isSetup !== 'boolean') {
-      this.notifier.addNotification({
+      window.Notify.addNotification({
         title: 'Server Error',
         message: 'Sorry, the server returned an unexpected format.',
         level: 'error',
@@ -44,10 +47,10 @@ export class Main extends React.Component<{}, State> {
     return (
       <div>
         <NotificationSystem
-          ref={(n: NotificationSystem.System) => (this.notifier = n)}
+          ref={(n: NotificationSystem.System) => (window.Notify = n)}
         />
         <h1>Demo Blog Platform</h1>
-        {this.state.isSetup ? <Homepage /> : <Setup notifier={this.notifier} />}
+        {this.state.isSetup ? <Homepage /> : <Setup />}
       </div>
     );
   }

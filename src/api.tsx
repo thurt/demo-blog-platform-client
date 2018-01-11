@@ -14,7 +14,7 @@ interface apiError {
 function handleError(e: Error | Response) {
   if (e instanceof Error) {
     console.error(e);
-    this.props.notifier.addNotification({
+    window.Notify.addNotification({
       title: 'Server Error',
       message:
         'Sorry, something went wrong when trying to communicate with the server. Please try again later.',
@@ -25,7 +25,7 @@ function handleError(e: Error | Response) {
     e
       .json()
       .then((apie: apiError) =>
-        this.props.notifier.addNotification({
+        window.Notify.addNotification({
           title: e.statusText,
           message: apie.error,
           level: 'error',
@@ -33,7 +33,7 @@ function handleError(e: Error | Response) {
       )
       .catch(parsee => {
         console.error(parsee);
-        this.props.notifier.addNotification({
+        window.Notify.addNotification({
           title: 'Server Error',
           message:
             'Sorry, something went wrong when trying to communicate with the server. Please try again later.',
