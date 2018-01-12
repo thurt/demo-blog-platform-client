@@ -45,6 +45,7 @@ export class Setup extends React.Component<{}, {}> {
           'Passwords must match. Please retry entering your password twice.',
         level: 'error',
       });
+      form.enableInputs(f);
       return;
     }
 
