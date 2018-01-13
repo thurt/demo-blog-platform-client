@@ -1,7 +1,40 @@
 import * as React from 'react';
+import * as api from '../api';
 
 export class Homepage extends React.Component<{}, {}> {
+  async componentDidMount() {
+    if (window.app.state.isSetup === undefined) {
+      try {
+        const isSetup = await api.request.isSetup();
+        // using type guard to notify tsc that isSetup is actually a boolean even though isSetup() is typed to return "{value: boolean}".
+        // there is a bug in the server package grpc-gateway that does not handle well-known types from protobuf/wrappers.proto properly
+        if (typeof isSetup !== 'boolean') {
+          api.handleError(
+            new Error(
+              'want "isSetup" to be typeof boolean, got typeof ' +
+                typeof isSetup,
+            ),
+          );
+          return;
+        }
+        isSetup
+          ? window.app.replaceState({isSetup})
+          : window.app.pushState({isSetup}, '/setup');
+      } catch (e) {
+        api.handleError(e);
+      }
+    }
+  }
+
   render() {
-    return <div>Homepage</div>;
+    return (
+      <div>
+        {window.app.state.isSetup === undefined ? (
+          <em>Loading...</em>
+        ) : (
+          <h4>Homepage</h4>
+        )}
+      </div>
+    );
   }
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {Homepage} from './Homepage';
 import {Setup} from './Setup';
+import {Router} from './Router';
 import * as api from '../api';
 import * as NotificationSystem from 'react-notification-system';
 
@@ -20,6 +21,9 @@ interface App {
 
 window.app = {
   get state() {
+    if (window.history.state === null) {
+      return initialState;
+    }
     return window.history.state;
   },
   pushState(data, url) {
@@ -38,14 +42,14 @@ interface State {
   isSetup: boolean;
 }
 
-const defaultState: State = {
+const initialState: State = {
   isSetup: undefined,
 };
 
 export class Main extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
-    this.state = defaultState;
+    this.state = initialState;
   }
 
   componentDidMount() {
@@ -54,10 +58,7 @@ export class Main extends React.Component<{}, State> {
       evt => {
         evt.stopImmediatePropagation();
         console.log('popstate:', evt.state);
-        // evt.state could be null, which will not trigger a re-render in react
-        evt.state === null
-          ? this.setState(defaultState)
-          : this.setState(evt.state);
+        this.setState(window.app.state);
       },
       true,
     );
@@ -70,34 +71,7 @@ export class Main extends React.Component<{}, State> {
       },
       true,
     );
-    window.app.state === null
-      ? this.setState(defaultState)
-      : this.setState(window.app.state);
-  }
-
-  async componentDidUpdate() {
-    if (this.state.isSetup === undefined) {
-      try {
-        const isSetup = await api.request.isSetup();
-        // using type guard to notify tsc that isSetup is actually a boolean even though isSetup() is typed to return "{value: boolean}".
-        // there is a bug in the server package grpc-gateway that does not handle well-known types from protobuf/wrappers.proto properly
-        if (typeof isSetup !== 'boolean') {
-          api.handleError(
-            new Error(
-              'want "isSetup" to be typeof boolean, got typeof ' +
-                typeof isSetup,
-            ),
-          );
-          return;
-        }
-        //this.setState({isSetup});
-        isSetup
-          ? window.app.pushState({isSetup}, '')
-          : window.app.pushState({isSetup}, '/setup');
-      } catch (e) {
-        api.handleError(e);
-      }
-    }
+    this.setState(window.app.state);
   }
 
   render() {
@@ -107,13 +81,7 @@ export class Main extends React.Component<{}, State> {
           ref={(n: NotificationSystem.System) => (window.Notify = n)}
         />
         <h1>Demo Blog Platform</h1>
-        {this.state.isSetup === undefined ? (
-          <em>Loading...</em>
-        ) : this.state.isSetup ? (
-          <Homepage />
-        ) : (
-          <Setup />
-        )}
+        <Router route={window.location.pathname} />
       </div>
     );
   }
