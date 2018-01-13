@@ -18,9 +18,7 @@ interface State {
 export class Main extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
-    this.state = {
-      isSetup: false,
-    };
+    this.state = {isSetup: undefined};
   }
 
   async componentDidMount() {
@@ -49,7 +47,13 @@ export class Main extends React.Component<{}, State> {
           ref={(n: NotificationSystem.System) => (window.Notify = n)}
         />
         <h1>Demo Blog Platform</h1>
-        {this.state.isSetup ? <Homepage /> : <Setup />}
+        {this.state.isSetup === undefined ? (
+          <em>Loading...</em>
+        ) : this.state.isSetup ? (
+          <Homepage />
+        ) : (
+          <Setup />
+        )}
       </div>
     );
   }
