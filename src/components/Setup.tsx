@@ -64,6 +64,7 @@ export class Setup extends React.Component<{}, {}> {
         message: 'Admin account created',
         level: 'success',
       });
+      window.app.pushState({isSetup: true});
     } catch (e) {
       api.handleError(e);
       form.enableInputs(f); // re-enable inputs after handling an error
