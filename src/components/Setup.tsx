@@ -1,7 +1,5 @@
 import * as React from 'react';
-import * as NotificationSystem from 'react-notification-system';
 import * as api from '../api';
-import * as cms from 'cms-client-api';
 import * as form from '../form';
 
 export class Setup extends React.Component<{}, {}> {

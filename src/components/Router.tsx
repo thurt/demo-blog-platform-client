@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import {Homepage} from './Homepage';
 import {Setup} from './Setup';
 import {NotFound} from './NotFound';
