@@ -9,7 +9,8 @@
     "cms-client-api": "github:thurt/cms-client-api",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-notification-system": "^0.2.16"
+    "react-notification-system": "^0.2.16",
+    "storage-manager": "github:thurt/storage-manager"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.1",
