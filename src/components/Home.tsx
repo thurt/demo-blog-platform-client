@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as api from '../api';
 
-export class Homepage extends React.Component<{}, {}> {
+export class Home extends React.Component<{}, {}> {
   async componentDidMount() {
     if (window.app.state.isSetup === undefined) {
       try {

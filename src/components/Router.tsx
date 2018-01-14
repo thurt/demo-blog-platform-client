@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Homepage} from './Homepage';
+import {Home} from './Home';
 import {Setup} from './Setup';
 import {NotFound} from './NotFound';
 
@@ -17,7 +17,7 @@ export class Router extends React.Component<Props, {}> {
 
     switch (this.props.route) {
       case '/':
-        Component = Homepage;
+        Component = Home;
         break;
       case '/setup':
         Component = Setup;

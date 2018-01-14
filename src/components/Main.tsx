@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Homepage} from './Homepage';
+import {Home} from './Home';
 import {Setup} from './Setup';
 import {Router} from './Router';
 import * as api from '../api';
