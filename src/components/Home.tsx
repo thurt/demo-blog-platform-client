@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as api from '../api';
+import {LoginStatus} from './LoginStatus';
 
 export class Home extends React.Component<{}, {}> {
   async componentDidMount() {
@@ -32,7 +33,10 @@ export class Home extends React.Component<{}, {}> {
         {window.app.state.isSetup === undefined ? (
           <em>Loading...</em>
         ) : (
-          <h4>Homepage</h4>
+          <div>
+            <h4>Homepage</h4>
+            <LoginStatus />
+          </div>
         )}
       </div>
     );
