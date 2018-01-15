@@ -27,12 +27,13 @@ export class Login extends React.Component<{}, {}> {
 
     try {
       // submit values
-      const auth = await api.request.authUser({body: {id, password}});
+      const authUser = await api.request.authUser({body: {id, password}});
       window.Notify.addNotification({
         title: 'Success!',
         message: 'You are now logged in',
         level: 'success',
       });
+      window.app.pushState({authUser}, '/');
     } catch (e) {
       api.handleError(e);
       form.enableInputs(f);
