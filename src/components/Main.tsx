@@ -15,7 +15,7 @@ declare global {
 
 interface App {
   readonly state: State;
-  pushState(data: Partial<State>, url?: string | null): void;
+  pushState(data: Partial<State>, url: string): void;
   replaceState(data: Partial<State>): void;
 }
 
