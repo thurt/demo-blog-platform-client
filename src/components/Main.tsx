@@ -3,6 +3,7 @@ import {Home} from './Home';
 import {Setup} from './Setup';
 import {Router} from './Router';
 import * as api from '../api';
+import {CmsAccessToken} from 'cms-client-api';
 import * as NotificationSystem from 'react-notification-system';
 
 declare global {
@@ -39,10 +40,12 @@ window.app = {
 
 interface State {
   isSetup: boolean;
+  authUser: CmsAccessToken;
 }
 
 const initialState: State = {
   isSetup: undefined,
+  authUser: undefined,
 };
 
 export class Main extends React.Component<{}, State> {
