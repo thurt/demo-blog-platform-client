@@ -1,6 +1,6 @@
-import * as swaggerClient from 'cms-client-api';
+import * as api from 'cms-client-api';
 
-export const request = swaggerClient.CmsApiFactory(
+export const request = api.CmsApiFactory(
   undefined,
   'https://localhost:8000/api',
 );
