@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+    - 8.9.4
+before_deploy:
+    - npm run build:deploy
+deploy:
+  provider: gcs
+  access_key_id: GOOGDTAOIUVFHT4E5EHL
+  secret_access_key:
+    secure: BT5aw0LInLq/7KkaJHOhuCOWPkzuhR88GefCOnY0Y8iWkXl/5MYPlOzycbNGKHROB3+IMmIkOARH2uD3bg9TdtMrEHAKRsN28kh6i9aPI0VXwyu7qyFfYoodxWo0sa2BQPdxxtnk/ZJNZK+xTnqVFpo1l1PfoiYqu6uph7O4sJVuJV7NYyD+3I+jI2JZrsEAwZOv6MmlHNKgUaNEqwBuB7SFZMEB/DNCG8Eag9ZRC9klylKKoZZGRgrbpd4NtPzP65AokUO4vFBxOP3DNybvwDtyRCpn2R1i+ZHufIcxaZJ+ya2lFrp/j5aznDn3selvIumMUf3ruaTrpgTpvhNPEP069WXQTuokmv5DToKPQNSWk+M6dWxGuhP90OW9wN8SVsCO4LRigQwPPMnOj7vJk/TK+2b833EfBYvLLKJi8XBgUqv+RurVXJZAz0TKUsjqkVD9Ct9SdQucvkrTLN0ZzGScJJB1+IUqDFyXdtVoKrskATDWA4yZbN+ZDXwN9veOzfqB5e+pT8r2lNe8k+LM+8QV4ZUUOo0WkYwLwvxc5+pPBp9zIksvdtxVMrW0jtXWFSzoriUU3Nhthh/4qvXmt0e+cGYR6v7Xsh04Lx8eyeENYkrINAz2s+9NcpwvGYzLhtYZr+Dw1Vwv3q93uROdAQ3QO9r3Cshqcr28SKh7mq0=
+  bucket: learned-stone-189802.appspot.com/static
+  skip_cleanup: true
+  detect_encoding: true
+  local-dir: static
+  on:
+    repo: thurt/demo-blog-platform-client
