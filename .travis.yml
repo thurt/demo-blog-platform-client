@@ -12,5 +12,6 @@ deploy:
   skip_cleanup: true
   detect_encoding: true
   local-dir: deploy
+  acl: public-read
   on:
     repo: thurt/demo-blog-platform-client
