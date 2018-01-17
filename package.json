@@ -21,7 +21,8 @@
   "scripts": {
     "test": "echo \"no test specified\" && exit 0",
     "build:watch": "webpack --watch",
-    "build:deploy": "webpack && mkdir -p static/dist && cp index.html static/ && mv dist/* static/dist/"
+    "build:deploy":
+      "webpack && mkdir -p deploy/dist && cp index.html deploy/ && mv dist/* deploy/dist/"
   },
   "author": "thurt",
   "license": "ISC",

@@ -11,6 +11,6 @@ deploy:
   bucket: learned-stone-189802.appspot.com
   skip_cleanup: true
   detect_encoding: true
-  local-dir: static
+  local-dir: deploy
   on:
     repo: thurt/demo-blog-platform-client
