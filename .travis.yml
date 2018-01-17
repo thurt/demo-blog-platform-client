@@ -15,3 +15,5 @@ deploy:
   acl: public-read
   on:
     repo: thurt/demo-blog-platform-client
+notifications:
+    email: false
