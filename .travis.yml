@@ -2,7 +2,7 @@ language: node_js
 node_js:
     - 8.9.4
 before_deploy:
-    - npm run build:deploy
+    - $(npm bin)/webpack
 deploy:
   provider: gcs
   access_key_id: GOOGDTAOIUVFHT4E5EHL

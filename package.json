@@ -19,10 +19,7 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "test": "echo \"no test specified\" && exit 0",
-    "build:watch": "webpack --watch",
-    "build:deploy":
-      "webpack && mkdir -p deploy/dist && cp index.html deploy/ && mv dist/* deploy/dist/"
+    "test": "echo \"no test specified\" && exit 0"
   },
   "author": "thurt",
   "license": "ISC",
