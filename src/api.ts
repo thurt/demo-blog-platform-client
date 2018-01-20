@@ -1,6 +1,7 @@
 import * as api from 'cms-client-api';
 
-export const request = api.CmsApiFactory(undefined, '/api');
+export const basePath = '/api';
+export const request = api.CmsApiFactory(undefined, basePath);
 
 // apiError is the interface returned by the api in the response body when a request error has occurred. Common examples of request errors that would cause the server to respond with an apiError would be when the the request contains invalid or missing values, or when a request is made for a non-existant entity.
 interface apiError {

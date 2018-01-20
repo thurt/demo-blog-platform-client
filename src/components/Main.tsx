@@ -3,8 +3,8 @@ import {Home} from './Home';
 import {Setup} from './Setup';
 import {Router} from './Router';
 import * as api from '../api';
-import {CmsAccessToken, CmsUser} from 'cms-client-api';
 import * as NotificationSystem from 'react-notification-system';
+import {CmsAccessToken, CmsUser} from 'cms-client-api';
 
 declare global {
   interface Window {
