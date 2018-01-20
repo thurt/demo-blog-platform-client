@@ -3,12 +3,7 @@ import * as form from '../form';
 import * as api from '../api';
 
 export class Login extends React.Component<{}, {}> {
-  constructor(props: {}) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  static async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const f = event.currentTarget;
 
@@ -46,7 +41,7 @@ export class Login extends React.Component<{}, {}> {
     return (
       <div>
         <h2>Login</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={Login.handleSubmit}>
           <label>Id: </label>
           <input name="id" type="text" />
 
