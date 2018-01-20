@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./deploy/dist",
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
