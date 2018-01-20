@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as api from '../api';
 import {LoginStatus} from './LoginStatus';
+import {Posts} from './Posts';
 
 export class Home extends React.Component<{}, {}> {
   async componentDidMount() {
@@ -35,6 +36,7 @@ export class Home extends React.Component<{}, {}> {
           <div>
             <h4>Homepage</h4>
             <LoginStatus />
+            <Posts />
           </div>
         ) : (
           <em>Loading...</em>
