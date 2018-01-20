@@ -1,7 +1,25 @@
 import * as React from 'react';
 
 export class LoginStatus extends React.Component<{}, {}> {
+  static login() {
+    window.app.pushState({}, '/login');
+  }
+  static logout() {
+    window.app.replaceState({authUser: undefined});
+  }
+
   render() {
-    return <div>LoginStatus</div>;
+    return (
+      <div>
+        {window.app.state.authUser === undefined ? (
+          <button onClick={LoginStatus.login}>Login</button>
+        ) : (
+          <div>
+            {'Logged in'}
+            <button onClick={LoginStatus.logout}>Logout</button>
+          </div>
+        )}
+      </div>
+    );
   }
 }
