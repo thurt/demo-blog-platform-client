@@ -15,7 +15,7 @@ export class LoginStatus extends React.Component<{}, {}> {
           <button onClick={LoginStatus.login}>Login</button>
         ) : (
           <div>
-            {'Logged in'}
+            {'Logged in as ' + window.app.state.authUser.id}
             <button onClick={LoginStatus.logout}>Logout</button>
           </div>
         )}

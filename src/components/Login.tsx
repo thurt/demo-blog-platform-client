@@ -28,12 +28,14 @@ export class Login extends React.Component<{}, {}> {
     try {
       // submit values
       const authUser = await api.request.authUser({body: {id, password}});
+      const user = await api.request.getUser({id});
+      // combine authUser and user keys into app.state.authUser
+      window.app.pushState({authUser: {...authUser, ...user}}, '/');
       window.Notify.addNotification({
         title: 'Success!',
-        message: 'You are now logged in',
+        message: 'You are now logged in as ' + window.app.state.authUser.id,
         level: 'success',
       });
-      window.app.pushState({authUser}, '/');
     } catch (e) {
       api.handleError(e);
       form.enableInputs(f);
