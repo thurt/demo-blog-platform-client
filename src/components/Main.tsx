@@ -3,6 +3,7 @@ import {Home} from './Home';
 import {Setup} from './Setup';
 import {Router} from './Router';
 import {LoginStatus} from './LoginStatus';
+import Store from '../store';
 
 import * as api from '../api';
 import * as NotificationSystem from 'react-notification-system';
@@ -29,13 +30,17 @@ window.app = {
     return window.history.state;
   },
   pushState(data, url) {
+    console.log('call to pushState', data, url);
     const newState = {...window.app.state, ...data};
     window.history.pushState(newState, '', url);
+    Store.set('state', JSON.stringify(newState));
     window.dispatchEvent(new CustomEvent('stateChange', {detail: newState}));
   },
   replaceState(data) {
+    console.log('call to replaceState', data);
     const newState = {...window.app.state, ...data};
     window.history.replaceState(newState, '');
+    Store.set('state', JSON.stringify(newState));
     window.dispatchEvent(new CustomEvent('stateChange', {detail: newState}));
   },
 };
