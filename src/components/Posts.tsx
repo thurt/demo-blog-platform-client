@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ndjsonStream from 'can-ndjson-stream';
+import ndjsonStream = require('can-ndjson-stream'); // This file should be imported using the CommonJS-style
 import * as api from '../api';
 import {CmsPost} from 'cms-client-api';
 
@@ -9,20 +9,6 @@ type postChunk = {
 };
 
 export class Posts extends React.Component<{}, {}> {
-  static onReceivePost(r: ReadableStream) {
-    return (p: postChunk) => {
-      if (p.done) {
-        console.log('stream complete');
-        return;
-      }
-      console.log('got value:', p.value);
-      r
-        .getReader()
-        .read()
-        .then(Posts.onReceivePost(r));
-    };
-  }
-
   async componentDidMount() {
     try {
       const r = await fetch(api.basePath + '/posts');
@@ -30,12 +16,12 @@ export class Posts extends React.Component<{}, {}> {
         throw r;
       }
 
-      const postStream = ndjsonStream(r.body).getReader();
+      const pr = ndjsonStream(r.body).getReader();
 
-      let result: postChunk;
-      while (!result || !result.done) {
-        result = await postStream.read();
-        console.log(result.done, result.value);
+      let pc: postChunk;
+      while (!pc || !pc.done) {
+        pc = await pr.read();
+        console.log(pc.done, pc.value);
       }
     } catch (e) {
       api.handleError(e);
