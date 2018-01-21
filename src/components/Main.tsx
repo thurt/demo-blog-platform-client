@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Home} from './Home';
 import {Setup} from './Setup';
 import {Router} from './Router';
+import {LoginStatus} from './LoginStatus';
+
 import * as api from '../api';
 import * as NotificationSystem from 'react-notification-system';
 import {CmsAccessToken, CmsUser, CmsPost} from 'cms-client-api';
@@ -41,13 +43,11 @@ window.app = {
 interface State {
   isSetup: boolean;
   authUser: CmsAccessToken & CmsUser;
-  posts: Array<CmsPost>;
 }
 
 const initialState: State = {
   isSetup: undefined,
   authUser: undefined,
-  posts: undefined,
 };
 
 export class Main extends React.Component<{}, State> {
@@ -84,7 +84,17 @@ export class Main extends React.Component<{}, State> {
         <NotificationSystem
           ref={(n: NotificationSystem.System) => (window.Notify = n)}
         />
-        <h1>Demo Blog Platform</h1>
+        <header
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <h1>
+            <a href="/">Demo Blog Platform</a>
+          </h1>
+          <LoginStatus />
+        </header>
         <Router route={window.location.pathname} />
       </div>
     );

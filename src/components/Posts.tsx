@@ -5,10 +5,19 @@ import {CmsPost} from 'cms-client-api';
 
 type postChunk = {
   done: boolean;
-  value: CmsPost;
+  value: {result: CmsPost};
 };
 
-export class Posts extends React.Component<{}, {}> {
+type State = {
+  posts: Array<CmsPost>;
+};
+
+export class Posts extends React.Component<{}, State> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {posts: []};
+  }
+
   async componentDidMount() {
     try {
       const r = await fetch(api.basePath + '/posts');
@@ -25,9 +34,7 @@ export class Posts extends React.Component<{}, {}> {
           break;
         }
 
-        window.app.replaceState({
-          posts: [...window.app.state.posts, pc.value],
-        });
+        this.setState({posts: this.state.posts.concat(pc.value.result)});
       }
     } catch (e) {
       api.handleError(e);
@@ -35,6 +42,23 @@ export class Posts extends React.Component<{}, {}> {
   }
 
   render() {
-    return <div>Posts</div>;
+    return (
+      <div>
+        <h3>Recent Posts</h3>
+        {this.state.posts.length === 0 ? (
+          <em>This blog has no posts yet!</em>
+        ) : null}
+        {this.state.posts.map((p, i) => {
+          return (
+            <div key={p.id}>
+              <h4>
+                <a href={`/posts/${p.slug}`}>{p.title || 'Untitled'}</a>
+              </h4>
+              <p>{p.created}</p>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 }
