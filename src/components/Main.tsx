@@ -4,7 +4,7 @@ import {Setup} from './Setup';
 import {Router} from './Router';
 import * as api from '../api';
 import * as NotificationSystem from 'react-notification-system';
-import {CmsAccessToken, CmsUser} from 'cms-client-api';
+import {CmsAccessToken, CmsUser, CmsPost} from 'cms-client-api';
 
 declare global {
   interface Window {
@@ -41,11 +41,13 @@ window.app = {
 interface State {
   isSetup: boolean;
   authUser: CmsAccessToken & CmsUser;
+  posts: Array<CmsPost>;
 }
 
 const initialState: State = {
   isSetup: undefined,
   authUser: undefined,
+  posts: undefined,
 };
 
 export class Main extends React.Component<{}, State> {

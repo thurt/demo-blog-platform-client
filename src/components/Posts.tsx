@@ -19,9 +19,15 @@ export class Posts extends React.Component<{}, {}> {
       const pr = ndjsonStream(r.body).getReader();
 
       let pc: postChunk;
-      while (!pc || !pc.done) {
+      while (true) {
         pc = await pr.read();
-        console.log(pc.done, pc.value);
+        if (pc.done) {
+          break;
+        }
+
+        window.app.replaceState({
+          posts: [...window.app.state.posts, pc.value],
+        });
       }
     } catch (e) {
       api.handleError(e);
