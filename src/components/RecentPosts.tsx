@@ -12,7 +12,7 @@ type State = {
   posts: Array<CmsPost>;
 };
 
-export class Posts extends React.Component<{}, State> {
+export class RecentPosts extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {posts: []};

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as api from '../api';
-import {Posts} from './Posts';
+import {RecentPosts} from './RecentPosts';
 
 export class Home extends React.Component<{}, {}> {
   async componentDidMount() {
@@ -33,7 +33,7 @@ export class Home extends React.Component<{}, {}> {
       <div>
         {window.app.state.isSetup === true ? (
           <div>
-            <Posts />
+            <RecentPosts />
           </div>
         ) : (
           <em>Loading...</em>
