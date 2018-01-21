@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as api from '../api';
-import {LoginStatus} from './LoginStatus';
 import {Posts} from './Posts';
 
 export class Home extends React.Component<{}, {}> {
@@ -34,8 +33,6 @@ export class Home extends React.Component<{}, {}> {
       <div>
         {window.app.state.isSetup === true ? (
           <div>
-            <h4>Homepage</h4>
-            <LoginStatus />
             <Posts />
           </div>
         ) : (
