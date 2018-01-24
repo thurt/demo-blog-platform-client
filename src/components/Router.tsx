@@ -45,7 +45,7 @@ export class Router extends React.Component<Props, {}> {
     }
 
     return (
-      <div>
+      <div style={{flex: 1, display: 'flex'}}>
         <Component />
       </div>
     );

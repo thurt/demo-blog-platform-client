@@ -85,7 +85,7 @@ export class Main extends React.Component<{}, State> {
 
   render() {
     return (
-      <div>
+      <div id="main">
         <NotificationSystem
           ref={(n: NotificationSystem.System) => (window.Notify = n)}
         />

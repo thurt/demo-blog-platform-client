@@ -10,4 +10,4 @@ if (s !== false) {
   window.app.replaceState(JSON.parse(s));
 }
 
-ReactDOM.render(<Main />, document.getElementById('example'));
+ReactDOM.render(<Main />, document.getElementById('main-wrapper'));
