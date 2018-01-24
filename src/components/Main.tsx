@@ -55,6 +55,13 @@ const initialState: State = {
   authUser: undefined,
 };
 
+const s = Store.get('state');
+if (s !== false) {
+  // hydrate window.app.state
+  console.log('hydrating window.app.state with store state', s);
+  window.app.replaceState({...initialState, ...JSON.parse(s)});
+}
+
 export class Main extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
