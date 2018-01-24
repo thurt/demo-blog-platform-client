@@ -32,7 +32,7 @@ export class Router extends React.Component<Props, {}> {
         if (this.props.route.includes('/posts/')) {
           Component = Post;
           break;
-        } else if (this.props.route.includes('/user')) {
+        } else if (this.props.route.includes('/users/')) {
           Component = User;
           break;
         }
