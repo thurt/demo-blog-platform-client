@@ -58,39 +58,35 @@ export class User extends React.Component<{}, State> {
     const cs = this.state.comments;
     return (
       <div>
+        <h2>User Profile</h2>
         {u === undefined ? <em>Loading...</em> : null}
         {u ? (
           <div>
-            <h2>User Profile: {u.id}</h2>
             <h3>
-              <a href={`mailto:${u.email}`}>{u.email}</a>
+              {u.id} (<a href={`mailto:${u.email}`}>{u.email}</a>)
             </h3>
             <ul>
               <li>Role: {u.role}</li>
               <li>Member Since: {u.created}</li>
               <li>Last Active: {u.last_active}</li>
             </ul>
-            <div>
-              <h3>Recent Comments</h3>
-              {cs === undefined ? <em>Loading...</em> : null}
-              {cs && cs.length === 0 ? (
-                <em>This user has no comments!</em>
-              ) : null}
-              {cs &&
-                cs.map((c, i) => {
-                  return (
-                    <div key={c.id}>
-                      <h3>
-                        <a href={`/posts/${c.post_id}`}>{c.post_id}</a>
-                      </h3>
-                      <h4>Commented on: {c.created}</h4>
-                      <p>{c.content}</p>
-                    </div>
-                  );
-                })}
-            </div>
           </div>
         ) : null}
+        <h3>Recent Comments</h3>
+        {cs === undefined ? <em>Loading...</em> : null}
+        {cs && cs.length === 0 ? <em>This user has no comments!</em> : null}
+        {cs &&
+          cs.map((c, i) => {
+            return (
+              <div key={c.id}>
+                <h3>
+                  <a href={`/posts/${c.post_id}`}>{c.post_id}</a>
+                </h3>
+                <h4>Commented on: {c.created}</h4>
+                <p>{c.content}</p>
+              </div>
+            );
+          })}
       </div>
     );
   }
