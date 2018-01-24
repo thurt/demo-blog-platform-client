@@ -57,7 +57,7 @@ export class RecentPosts extends React.Component<{}, State> {
             return (
               <div key={p.id}>
                 <h4>
-                  <a href={`/posts/${p.slug}`}>{p.title || 'Untitled'}</a>
+                  <a href={`/posts/${p.slug}`}>{p.title}</a>
                 </h4>
                 <p>{p.created}</p>
               </div>
