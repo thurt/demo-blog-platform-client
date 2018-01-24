@@ -1,5 +1,4 @@
 import * as React from 'react';
-import ndjsonStream = require('can-ndjson-stream'); // This file should be imported using the CommonJS-style
 import * as api from '../api';
 import {CmsPost} from 'cms-client-api';
 
@@ -20,25 +19,13 @@ export class RecentPosts extends React.Component<{}, State> {
 
   async componentDidMount() {
     try {
-      const r = await fetch(api.basePath + '/posts');
-      if (!r.ok) {
-        throw r;
-      }
-
-      const pr = ndjsonStream(r.body).getReader();
-
-      let pc: postChunk;
-      while (true) {
-        pc = await pr.read();
-        if (pc.done) {
-          break;
-        }
-
+      await api.streamRequest(api.basePath + '/posts', (pc: postChunk) => {
         this.setState({
           posts: (this.state.posts || []).concat(pc.value.result),
         });
-      }
-      // will be true when have finished fetching posts but there were no posts
+      });
+
+      // will be true when have finished fetching posts and there were no posts
       if (this.state.posts === undefined) this.setState({posts: []});
     } catch (e) {
       api.handleError(e);

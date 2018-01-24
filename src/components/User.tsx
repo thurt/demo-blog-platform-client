@@ -1,5 +1,4 @@
 import * as React from 'react';
-import ndjsonStream = require('can-ndjson-stream'); // This file should be imported using the CommonJS-style
 import * as api from '../api';
 import {CmsUser, CmsComment} from 'cms-client-api';
 
@@ -26,24 +25,14 @@ export class User extends React.Component<{}, State> {
       const user = await api.request.getUser({id});
       this.setState({user});
 
-      const r = await fetch(api.basePath + path + '/comments');
-      if (!r.ok) {
-        throw r;
-      }
-
-      const cr = ndjsonStream(r.body).getReader();
-
-      let cc: commentChunk;
-      while (true) {
-        cc = await cr.read();
-        if (cc.done) {
-          break;
-        }
-
-        this.setState({
-          comments: (this.state.comments || []).concat(cc.value.result),
-        });
-      }
+      await api.streamRequest(
+        api.basePath + path + '/comments',
+        (cc: commentChunk) => {
+          this.setState({
+            comments: (this.state.comments || []).concat(cc.value.result),
+          });
+        },
+      );
       // will be true when have finished fetching comments and there were no comments
       if (this.state.comments === undefined) {
         this.setState({comments: []});
