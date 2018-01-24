@@ -98,7 +98,8 @@ export class Main extends React.Component<{}, State> {
           <h1>
             <a href="/">Demo Blog Platform</a>
           </h1>
-          {window.app.state.authUser.role === 'ADMIN' ? (
+          {window.app.state.authUser.role === 'ADMIN' &&
+          !window.location.pathname.includes('/editor') ? (
             <div>
               <a href="/editor">Go To Editor</a>
             </div>
