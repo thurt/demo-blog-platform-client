@@ -16,7 +16,6 @@ export class User extends React.Component<{}, State> {
     const id = window.location.pathname.replace(/\/users\//, '');
     try {
       const user = await api.request.getUser({id});
-      console.log(user);
       this.setState({user});
     } catch (e) {
       api.handleError(e);
