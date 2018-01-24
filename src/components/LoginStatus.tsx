@@ -15,7 +15,10 @@ export class LoginStatus extends React.Component<{}, {}> {
           <button onClick={LoginStatus.login}>Login</button>
         ) : (
           <div>
-            {'Logged in as ' + window.app.state.authUser.id}
+            {'Logged in as '}
+            <a href={`/user/${window.app.state.authUser.id}`}>
+              {window.app.state.authUser.id}
+            </a>
             <button onClick={LoginStatus.logout}>Logout</button>
           </div>
         )}
