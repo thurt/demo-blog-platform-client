@@ -91,6 +91,8 @@ export class Main extends React.Component<{}, State> {
   }
 
   render() {
+    const a = window.app.state.authUser;
+    const p = window.location.pathname;
     return (
       <div id="main">
         <NotificationSystem
@@ -105,15 +107,14 @@ export class Main extends React.Component<{}, State> {
           <h1>
             <a href="/">Demo Blog Platform</a>
           </h1>
-          {window.app.state.authUser.role === 'ADMIN' &&
-          !window.location.pathname.includes('/editor') ? (
+          {a && a.role === 'ADMIN' && !p.includes('/editor') ? (
             <div>
               <a href="/editor">Go To Editor</a>
             </div>
           ) : null}
           <LoginStatus />
         </header>
-        <Router route={window.location.pathname} />
+        <Router route={p} />
       </div>
     );
   }
