@@ -7,7 +7,7 @@ import Store from '../store';
 
 import * as api from '../api';
 import * as NotificationSystem from 'react-notification-system';
-import {CmsAccessToken, CmsUser, CmsPost} from 'cms-client-api';
+import {CmsAccessToken, CmsUser, CmsPost, CmsUserRole} from 'cms-client-api';
 
 declare global {
   interface Window {
@@ -98,6 +98,11 @@ export class Main extends React.Component<{}, State> {
           <h1>
             <a href="/">Demo Blog Platform</a>
           </h1>
+          {window.app.state.authUser.role === 'ADMIN' ? (
+            <div>
+              <a href="/editor">Go To Editor</a>
+            </div>
+          ) : null}
           <LoginStatus />
         </header>
         <Router route={window.location.pathname} />
