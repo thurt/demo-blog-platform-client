@@ -5,6 +5,7 @@ import {NotFound} from './NotFound';
 import {Login} from './Login';
 import {Post} from './Post';
 import {User} from './User';
+import {Editor} from './Editor';
 
 interface Props {
   route: string;
@@ -27,6 +28,9 @@ export class Router extends React.Component<Props, {}> {
         break;
       case '/login':
         Component = Login;
+        break;
+      case '/editor':
+        Component = Editor;
         break;
       default:
         if (this.props.route.includes('/posts/')) {
