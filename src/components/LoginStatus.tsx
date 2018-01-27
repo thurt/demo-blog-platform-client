@@ -5,7 +5,7 @@ export class LoginStatus extends React.Component<{}, {}> {
     window.app.pushState({}, '/login');
   }
   static logout() {
-    window.app.replaceState({authUser: undefined});
+    window.app.pushState({authUser: undefined}, '/');
   }
 
   render() {
