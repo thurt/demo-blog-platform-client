@@ -23,7 +23,7 @@ export class User extends React.Component<{}, State> {
     const path = window.location.pathname;
     const id = path.replace(/\/users\//, '');
     try {
-      const user = await api.request.getUser({id});
+      const user = await api.users.getUser({id});
       this.setState({user});
 
       await api.streamRequest(

@@ -18,7 +18,7 @@ export class Post extends React.Component<{}, State> {
     const id = Number(path.replace(/\/posts\//, ''));
 
     try {
-      const post = await api.request.getPost({id});
+      const post = await api.posts.getPost({id});
       this.setState({post});
     } catch (e) {
       error.Handle(e);

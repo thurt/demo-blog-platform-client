@@ -57,7 +57,7 @@ export class Setup extends React.Component<{}, {}> {
 
     try {
       // submit values
-      await api.request.setup({body: r});
+      await api.setup.setup({body: r});
       window.Notify.addNotification({
         title: 'Success!',
         message: 'Admin account created',
