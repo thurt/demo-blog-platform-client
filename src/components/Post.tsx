@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as api from '../api';
+import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
 
 type State = {
@@ -20,7 +21,7 @@ export class Post extends React.Component<{}, State> {
       const post = await api.request.getPost({id});
       this.setState({post});
     } catch (e) {
-      api.handleError(e);
+      error.Handle(e);
     }
   }
 

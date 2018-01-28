@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as api from '../api';
+import * as error from '../error';
 import * as form from '../form';
 
 export class Setup extends React.Component<{}, {}> {
@@ -64,7 +65,7 @@ export class Setup extends React.Component<{}, {}> {
       });
       window.app.pushState({isSetup: true}, '/');
     } catch (e) {
-      api.handleError(e);
+      error.Handle(e);
       form.enableInputs(f); // re-enable inputs after handling an error
     }
   }

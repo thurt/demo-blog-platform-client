@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as api from '../api';
+import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
 
 type postChunk = {
@@ -28,7 +29,7 @@ export class RecentPosts extends React.Component<{}, State> {
       // will be true when have finished fetching posts and there were no posts
       if (this.state.posts === undefined) this.setState({posts: []});
     } catch (e) {
-      api.handleError(e);
+      error.Handle(e);
     }
   }
 

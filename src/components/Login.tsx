@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as form from '../form';
 import * as api from '../api';
+import * as error from '../error';
 
 export class Login extends React.Component<{}, {}> {
   static async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -32,7 +33,7 @@ export class Login extends React.Component<{}, {}> {
         level: 'success',
       });
     } catch (e) {
-      api.handleError(e);
+      error.Handle(e);
       form.enableInputs(f);
     }
   }

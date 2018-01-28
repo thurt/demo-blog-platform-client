@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as api from '../api';
+import * as error from '../error';
 import {CmsUser, CmsComment} from 'cms-client-api';
 
 type commentChunk = {
@@ -38,7 +39,7 @@ export class User extends React.Component<{}, State> {
         this.setState({comments: []});
       }
     } catch (e) {
-      api.handleError(e);
+      error.Handle(e);
     }
   }
 

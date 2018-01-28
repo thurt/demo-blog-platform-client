@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as api from '../api';
+import * as error from '../error';
 import {RecentPosts} from './RecentPosts';
 
 export class Home extends React.Component<{}, {}> {
@@ -11,7 +12,7 @@ export class Home extends React.Component<{}, {}> {
         // there is a bug in the server package grpc-gateway that does not handle well-known types from protobuf/wrappers.proto properly
         // https://github.com/grpc-ecosystem/grpc-gateway/pull/412
         if (typeof isSetup !== 'boolean') {
-          api.handleError(
+          error.Handle(
             new Error(
               'want "isSetup" to be typeof boolean, got typeof ' +
                 typeof isSetup,
@@ -23,7 +24,7 @@ export class Home extends React.Component<{}, {}> {
           ? window.app.replaceState({isSetup})
           : window.app.pushState({isSetup}, '/setup');
       } catch (e) {
-        api.handleError(e);
+        error.Handle(e);
       }
     }
   }
