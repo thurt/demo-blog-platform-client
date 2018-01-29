@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as api from '../api';
+import {setup} from '../api';
 import * as error from '../error';
 import * as form from '../form';
 
@@ -57,7 +57,7 @@ export class Setup extends React.Component<{}, {}> {
 
     try {
       // submit values
-      await api.setup.setup({body: r});
+      await setup.setup({body: r});
       window.Notify.addNotification({
         title: 'Success!',
         message: 'Admin account created',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as api from '../api';
+import {users, streamRequest, basePath} from '../api';
 import * as error from '../error';
 import {CmsUser, CmsComment} from 'cms-client-api';
 
@@ -23,11 +23,11 @@ export class User extends React.Component<{}, State> {
     const path = window.location.pathname;
     const id = path.replace(/\/users\//, '');
     try {
-      const user = await api.users.getUser({id});
+      const user = await users.getUser({id});
       this.setState({user});
 
-      await api.streamRequest(
-        api.basePath + path + '/comments',
+      await streamRequest(
+        basePath + path + '/comments',
         (cc: commentChunk) => {
           this.setState({
             comments: (this.state.comments || []).concat(cc.value.result),

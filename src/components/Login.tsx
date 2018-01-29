@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as form from '../form';
-import * as api from '../api';
+import {auth, users} from '../api';
 import * as error from '../error';
 
 export class Login extends React.Component<{}, {}> {
@@ -23,8 +23,8 @@ export class Login extends React.Component<{}, {}> {
 
     try {
       // submit values
-      const authUser = await api.auth.authUser({body: {id, password}});
-      const user = await api.users.getUser({id});
+      const authUser = await auth.authUser({body: {id, password}});
+      const user = await users.getUser({id});
       // combine authUser and user keys into app.state.authUser
       window.app.pushState({authUser: {...authUser, ...user}}, '/');
       window.Notify.addNotification({

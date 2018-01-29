@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as api from '../api';
+import {streamRequest, basePath} from '../api';
 import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
 
@@ -20,7 +20,7 @@ export class RecentPosts extends React.Component<{}, State> {
 
   async componentDidMount() {
     try {
-      await api.streamRequest(api.basePath + '/posts', (pc: postChunk) => {
+      await streamRequest(basePath + '/posts', (pc: postChunk) => {
         this.setState({
           posts: (this.state.posts || []).concat(pc.value.result),
         });

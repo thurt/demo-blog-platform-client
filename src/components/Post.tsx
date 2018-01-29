@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as api from '../api';
+import {posts} from '../api';
 import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
 
@@ -15,10 +15,10 @@ export class Post extends React.Component<{}, State> {
 
   async componentDidMount() {
     const path = window.location.pathname;
-    const id = Number(path.replace(/\/posts\//, ''));
+    const slug = path.replace(/\/posts\//, '');
 
     try {
-      const post = await api.posts.getPost({id});
+      const post = await posts.getPostBySlug({slug});
       this.setState({post});
     } catch (e) {
       error.Handle(e);
