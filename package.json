@@ -8,6 +8,7 @@
     "@types/react-notification-system": "^0.2.35",
     "can-ndjson-stream": "^0.1.7",
     "cms-client-api": "github:thurt/cms-client-api",
+    "demo-mvvm-note-app": "github:thurt/demo-mvvm-note-app#posts-model",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-notification-system": "^0.2.16",
@@ -20,7 +21,9 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "test": "echo \"no test specified\" && exit 0"
+    "test": "echo \"no tests specified\" && exit 0",
+    "build":
+      "webpack && cp ./node_modules/demo-mvvm-note-app/dist/* ./deploy/editor/"
   },
   "author": "thurt",
   "license": "ISC",
