@@ -6,6 +6,7 @@ import {Login} from './Login';
 import {Post} from './Post';
 import {User} from './User';
 import {Editor} from './Editor';
+import {CreateUser} from './CreateUser';
 
 interface Props {
   route: string;
@@ -31,6 +32,9 @@ export class Router extends React.Component<Props, {}> {
         break;
       case '/editor':
         Component = Editor;
+        break;
+      case '/create-user':
+        Component = CreateUser;
         break;
       default:
         if (this.props.route.includes('/posts/')) {
