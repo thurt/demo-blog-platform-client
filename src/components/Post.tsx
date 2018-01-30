@@ -52,7 +52,7 @@ export class Post extends React.Component<{}, State> {
                 </em>
               ) : null}
             </h4>
-            <div>{p.content}</div>
+            <div dangerouslySetInnerHTML={{__html: p.content}} />
             <Comments id={p.id} />
             <h4>Join the discussion</h4>
             {window.app.state.authUser && window.app.state.authUser.id ? (
