@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {streamRequest, basePath} from '../api';
+import {comments, streamRequest, basePath} from '../api';
 import * as error from '../error';
 import {CmsComment} from 'cms-client-api';
 
@@ -21,6 +21,7 @@ export class Comments extends React.Component<Props, State> {
   constructor(p: Props) {
     super(p);
     this.state = {cs: undefined};
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -47,6 +48,28 @@ export class Comments extends React.Component<Props, State> {
     }
   }
 
+  deleteComment(id: CmsComment['id']) {
+    return async (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      if (window.confirm('Are you sure you want to delete this comment?')) {
+        await comments.deleteComment(
+          {id},
+          {
+            headers: {
+              Authorization: `Bearer ${window.app.state.authUser.access_token}`,
+            },
+          },
+        );
+        window.Notify.addNotification({
+          title: 'Success!',
+          message: 'Your comment was deleted',
+          level: 'success',
+        });
+        this.componentDidMount(); // update comments list
+      }
+    };
+  }
+
   render() {
     const cs = this.state.cs;
     return (
@@ -66,6 +89,15 @@ export class Comments extends React.Component<Props, State> {
                   <a href={`/users/${c.user_id}`}>{c.user_id}</a> wrote...
                 </h4>
                 <p>{c.content}</p>
+                {window.app.state.authUser &&
+                (window.app.state.authUser.id === c.user_id ||
+                  window.app.state.authUser.role === 'ADMIN') ? (
+                  <p style={{fontSize: 'smaller'}}>
+                    [<a href="" onClick={this.deleteComment(c.id)}>
+                      Delete Comment
+                    </a>]
+                  </p>
+                ) : null}
               </div>
             );
           })}
