@@ -2,6 +2,7 @@ import * as React from 'react';
 import {posts} from '../api';
 import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
+import {Comments} from './Comments';
 
 type State = {
   post: CmsPost;
@@ -51,6 +52,7 @@ export class Post extends React.Component<{}, State> {
               ) : null}
             </h4>
             <div>{p.content}</div>
+            <Comments id={p.id} />
           </div>
         ) : null}
       </div>
