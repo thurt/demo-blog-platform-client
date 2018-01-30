@@ -48,10 +48,6 @@ export class Router extends React.Component<Props, {}> {
         break;
     }
 
-    return (
-      <div style={{flex: 1, display: 'flex'}}>
-        <Component />
-      </div>
-    );
+    return <Component />;
   }
 }

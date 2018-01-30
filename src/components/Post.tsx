@@ -39,11 +39,11 @@ export class Post extends React.Component<{}, State> {
   render() {
     const p = this.state.post;
     return (
-      <div>
+      <div style={{display: 'flex', flex: 1}}>
         {p === undefined ? <em>Loading...</em> : null}
         {p ? (
-          <div>
-            <h3>{p.title}</h3>
+          <div style={{width: '100%'}}>
+            <h2 style={{wordBreak: 'break-word'}}>{p.title}</h2>
             <h4>
               {new Date(p.created).toDateString()}
               <br />
@@ -53,7 +53,10 @@ export class Post extends React.Component<{}, State> {
                 </em>
               ) : null}
             </h4>
-            <div dangerouslySetInnerHTML={{__html: p.content}} />
+            <div
+              style={{wordBreak: 'break-word'}}
+              dangerouslySetInnerHTML={{__html: p.content}}
+            />
             <Comments id={p.id} _refresh={this.state.refreshComments} />
             <h4>Join the discussion</h4>
             {window.app.state.authUser && window.app.state.authUser.id ? (
