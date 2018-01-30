@@ -3,6 +3,7 @@ import {posts} from '../api';
 import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
 import {Comments} from './Comments';
+import {CreateComment} from './CreateComment';
 
 type State = {
   post: CmsPost;
@@ -53,6 +54,20 @@ export class Post extends React.Component<{}, State> {
             </h4>
             <div>{p.content}</div>
             <Comments id={p.id} />
+            <h4>Join the discussion</h4>
+            {window.app.state.authUser && window.app.state.authUser.id ? (
+              <CreateComment
+                user_id={window.app.state.authUser.id}
+                post_id={p.id}
+                access_token={window.app.state.authUser.access_token}
+              />
+            ) : (
+              <p>
+                Click here to <a href="/login">login</a>
+                <br />Or <a href="/createAccount">create an account</a> if you
+                don&#39;t have one already.
+              </p>
+            )}
           </div>
         ) : null}
       </div>

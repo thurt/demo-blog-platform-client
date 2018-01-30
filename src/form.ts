@@ -18,3 +18,8 @@ export function getInputByName(f: HTMLFormElement, name: string) {
   const ins = Array.from(f.getElementsByTagName('input'));
   return ins.find(i => i.name === name);
 }
+
+export function getTextAreaByName(f: HTMLFormElement, name: string) {
+  const ins = Array.from(f.getElementsByTagName('textarea'));
+  return ins.find(i => i.name === name);
+}
