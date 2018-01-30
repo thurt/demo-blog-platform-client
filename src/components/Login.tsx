@@ -44,10 +44,10 @@ export class Login extends React.Component<{}, {}> {
         <h2>Login</h2>
         <form onSubmit={Login.handleSubmit}>
           <label>Id: </label>
-          <input name="id" type="text" autoFocus={true} />
+          <input name="id" type="text" autoFocus={true} required />
 
           <label>Password: </label>
-          <input name="password" type="password" />
+          <input name="password" type="password" required />
 
           <input type="submit" value="Login" />
         </form>

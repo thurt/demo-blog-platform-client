@@ -81,15 +81,15 @@ export class Setup extends React.Component<{}, {}> {
         </p>
         <form onSubmit={this.handleSubmit}>
           <label>Email: </label>
-          <input name="email" type="email" />
+          <input name="email" type="email" required />
 
           <label>Id: </label>
-          <input name="id" type="text" />
+          <input name="id" type="text" required />
 
           <label>Password: </label>
-          <input name="password" type="password" />
+          <input name="password" type="password" required />
           <label>Repeat Password: </label>
-          <input name="repeat_password" type="password" />
+          <input name="repeat_password" type="password" required />
 
           <input type="submit" value="Create Account" />
         </form>
