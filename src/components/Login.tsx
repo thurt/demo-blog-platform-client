@@ -44,7 +44,7 @@ export class Login extends React.Component<{}, {}> {
         <h2>Login</h2>
         <form onSubmit={Login.handleSubmit}>
           <label>Id: </label>
-          <input name="id" type="text" />
+          <input name="id" type="text" autoFocus={true} />
 
           <label>Password: </label>
           <input name="password" type="password" />
