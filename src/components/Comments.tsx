@@ -14,6 +14,7 @@ type State = {
 
 type Props = {
   id: number;
+  _refresh: number;
 };
 
 export class Comments extends React.Component<Props, State> {
@@ -22,19 +23,25 @@ export class Comments extends React.Component<Props, State> {
     this.state = {cs: undefined};
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    if (this.props._refresh !== nextProps._refresh) {
+      this.componentDidMount();
+    }
+  }
+
   async componentDidMount() {
+    const cs: State['cs'] = [];
     try {
       await streamRequest(
         basePath + '/posts/' + this.props.id + '/comments',
         (cc: commentChunk) => {
-          this.setState({
-            cs: (this.state.cs || []).concat(cc.value.result),
-          });
+          cs.push(cc.value.result);
+          this.setState({cs});
         },
       );
 
       // will be true when have finished fetching posts and there were no posts
-      if (this.state.cs === undefined) this.setState({cs: []});
+      if (cs.length === 0) this.setState({cs: []});
     } catch (e) {
       error.Handle(e);
     }

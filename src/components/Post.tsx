@@ -7,6 +7,7 @@ import {CreateComment} from './CreateComment';
 
 type State = {
   post: CmsPost;
+  refreshComments: number;
 };
 
 function isGtDay(start: Date, end: Date): boolean {
@@ -20,7 +21,7 @@ function isGtDay(start: Date, end: Date): boolean {
 export class Post extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
-    this.state = {post: undefined};
+    this.state = {post: undefined, refreshComments: 0};
   }
 
   async componentDidMount() {
@@ -53,13 +54,18 @@ export class Post extends React.Component<{}, State> {
               ) : null}
             </h4>
             <div dangerouslySetInnerHTML={{__html: p.content}} />
-            <Comments id={p.id} />
+            <Comments id={p.id} _refresh={this.state.refreshComments} />
             <h4>Join the discussion</h4>
             {window.app.state.authUser && window.app.state.authUser.id ? (
               <CreateComment
                 user_id={window.app.state.authUser.id}
                 post_id={p.id}
                 access_token={window.app.state.authUser.access_token}
+                createdComment={() =>
+                  this.setState({
+                    refreshComments: this.state.refreshComments + 1,
+                  })
+                }
               />
             ) : (
               <p>
