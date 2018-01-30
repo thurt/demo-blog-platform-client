@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export class LoginStatus extends React.Component<{}, {}> {
   static login() {
-    window.app.pushState({}, '/login');
+    window.app.pushState({}, `/login?referrer=${window.location.pathname}`);
   }
   static logout() {
     window.app.pushState({authUser: undefined}, '/');

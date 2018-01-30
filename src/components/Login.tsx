@@ -26,12 +26,18 @@ export class Login extends React.Component<{}, {}> {
       const authUser = await auth.authUser({body: {id, password}});
       const user = await users.getUser({id});
       // combine authUser and user keys into app.state.authUser
-      window.app.pushState({authUser: {...authUser, ...user}}, '/');
+      const newAuthUser = {authUser: {...authUser, ...user}};
       window.Notify.addNotification({
         title: 'Success!',
-        message: 'You are now logged in as ' + window.app.state.authUser.id,
+        message: 'You are now logged in as ' + newAuthUser.authUser.id,
         level: 'success',
       });
+      const p = new URLSearchParams(window.location.search);
+      if (p.has('referrer')) {
+        window.app.pushState(newAuthUser, p.get('referrer'));
+      } else {
+        window.app.pushState(newAuthUser, '/');
+      }
     } catch (e) {
       error.Handle(e);
       form.enableInputs(f);
