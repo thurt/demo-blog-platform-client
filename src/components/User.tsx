@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {users, streamRequest, basePath} from '../api';
+import {posts, users, streamRequest, basePath} from '../api';
 import * as error from '../error';
-import {CmsUser, CmsComment} from 'cms-client-api';
+import {CmsUser, CmsComment, CmsPost} from 'cms-client-api';
 
 type commentChunk = {
   done: boolean;
@@ -11,12 +11,13 @@ type commentChunk = {
 type State = {
   user: CmsUser;
   comments: Array<CmsComment>;
+  posts: {[id: number]: CmsPost};
 };
 
 export class User extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
-    this.state = {user: undefined, comments: undefined};
+    this.state = {user: undefined, comments: undefined, posts: undefined};
   }
 
   async componentDidMount() {
@@ -28,10 +29,17 @@ export class User extends React.Component<{}, State> {
 
       await streamRequest(
         basePath + path + '/comments',
-        (cc: commentChunk) => {
-          this.setState({
-            comments: (this.state.comments || []).concat(cc.value.result),
-          });
+        async (cc: commentChunk) => {
+          const c = cc.value.result;
+          try {
+            const p = await posts.getPost({id: Number(c.post_id)});
+            this.setState({
+              comments: (this.state.comments || []).concat(cc.value.result),
+              posts: {...this.state.posts, [p.id]: p},
+            });
+          } catch (e) {
+            error.Handle(e);
+          }
         },
       );
       // will be true when have finished fetching comments and there were no comments
@@ -46,6 +54,7 @@ export class User extends React.Component<{}, State> {
   render() {
     const u = this.state.user;
     const cs = this.state.comments;
+    const ps = this.state.posts;
     return (
       <div>
         <h2>User Profile</h2>
@@ -70,7 +79,18 @@ export class User extends React.Component<{}, State> {
             return (
               <div key={c.id}>
                 <h3>
-                  <a href={`/posts/${c.post_id}`}>{c.post_id}</a>
+                  <a
+                    href={`/posts/${ps[Number(c.post_id)].slug}`}
+                    onClick={e => {
+                      e.preventDefault();
+                      window.app.pushState(
+                        {},
+                        `/posts/${ps[Number(c.post_id)].slug}`,
+                      );
+                      return false;
+                    }}>
+                    {ps[Number(c.post_id)].title}
+                  </a>
                 </h3>
                 <h4>Commented on: {c.created}</h4>
                 <p>{c.content}</p>
