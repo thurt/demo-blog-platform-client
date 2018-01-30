@@ -7,6 +7,14 @@ type State = {
   post: CmsPost;
 };
 
+function isGtDay(start: Date, end: Date): boolean {
+  const day = 86400000; // 24hrs*60mins*60s*1000ms = x ms/day
+  if (end.getTime() - start.getTime() > day) {
+    return true;
+  }
+  return false;
+}
+
 export class Post extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
@@ -34,7 +42,13 @@ export class Post extends React.Component<{}, State> {
           <div>
             <h3>{p.title}</h3>
             <h4>
-              Created: {p.created} (last edited: {p.last_edited})
+              {new Date(p.created).toDateString()}
+              <br />
+              {isGtDay(new Date(p.created), new Date(p.last_edited)) ? (
+                <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
+                  (edited: {new Date(p.last_edited).toDateString()})
+                </em>
+              ) : null}
             </h4>
             <div>{p.content}</div>
           </div>

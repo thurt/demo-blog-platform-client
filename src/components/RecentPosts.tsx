@@ -45,9 +45,9 @@ export class RecentPosts extends React.Component<{}, State> {
             return (
               <div key={p.id}>
                 <h4>
+                  {new Date(p.created).toLocaleDateString() + ' '}
                   <a href={`/posts/${p.slug}`}>{p.title}</a>
                 </h4>
-                <p>{p.created}</p>
               </div>
             );
           })}
