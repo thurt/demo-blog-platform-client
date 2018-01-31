@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {setup} from '../api';
+import {auth, setup} from '../api';
 import * as error from '../error';
 import * as form from '../form';
 
@@ -60,10 +60,16 @@ export class Setup extends React.Component<{}, {}> {
       await setup.setup({body: r});
       window.Notify.addNotification({
         title: 'Success!',
-        message: 'Admin account created',
+        message: 'New admin created',
         level: 'success',
       });
-      window.app.pushState({isSetup: true}, '/');
+      window.app.pushState({isSetup: true}, '/login');
+      window.Notify.addNotification({
+        title: 'Redirected to login screen',
+        message:
+          'Enter your username/password to access your newly created account',
+        level: 'info',
+      });
     } catch (e) {
       error.Handle(e);
       form.enableInputs(f); // re-enable inputs after handling an error

@@ -61,10 +61,16 @@ export class CreateUser extends React.Component<{}, {}> {
       await users.createUser({body: r});
       window.Notify.addNotification({
         title: 'Success!',
-        message: 'User created',
+        message: 'New user created',
         level: 'success',
       });
-      window.app.pushState({}, '/');
+      window.app.pushState({}, '/login');
+      window.Notify.addNotification({
+        title: 'Redirected to login screen',
+        message:
+          'Enter your username and password to access your newly created account',
+        level: 'info',
+      });
     } catch (e) {
       error.Handle(e);
       form.enableInputs(f); // re-enable inputs after handling an error
