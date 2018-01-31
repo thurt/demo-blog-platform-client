@@ -8,7 +8,7 @@ type Props = {
   user_id: CmsCreateCommentRequest['user_id'];
   post_id: CmsCreateCommentRequest['post_id'];
   access_token: CmsAccessToken['access_token'];
-  createdComment: () => void
+  createdComment: () => void;
 };
 
 export class CreateComment extends React.Component<Props, {}> {
@@ -45,10 +45,10 @@ export class CreateComment extends React.Component<Props, {}> {
       );
       window.Notify.addNotification({
         title: 'Success!',
-        message: 'Your comment has been submitted',
+        message: 'Your comment has been added',
         level: 'success',
       });
-      this.props.createdComment()
+      this.props.createdComment();
       cTextarea.value = ''; // clear textarea after handling -- this allows user to enter another comment
     } catch (e) {
       error.Handle(e);
