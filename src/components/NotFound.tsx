@@ -12,8 +12,15 @@ export class NotFound extends React.Component<{}, {}> {
         </p>
         <p>
           <b>
-            Click <a onClick={() => window.app.pushState({}, '/')}>here</a> to
-            go back home.
+            Click{' '}
+            <a
+              onClick={e => {
+                e.preventDefault();
+                window.app.pushState({}, '/');
+              }}>
+              here
+            </a>{' '}
+            to go back home.
           </b>
         </p>
       </div>

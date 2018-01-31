@@ -49,7 +49,7 @@ export class Comments extends React.Component<Props, State> {
   }
 
   deleteComment(id: CmsComment['id']) {
-    return async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    return async (e: React.SyntheticEvent<HTMLButtonElement>) => {
       e.preventDefault();
       if (window.confirm('Are you sure you want to delete this comment?')) {
         await comments.deleteComment(
@@ -86,16 +86,24 @@ export class Comments extends React.Component<Props, State> {
                     {c.created}
                   </em>
                   <br />
-                  <a href={`/users/${c.user_id}`}>{c.user_id}</a> wrote...
+                  <a
+                    href={`/users/${c.user_id}`}
+                    onClick={e => {
+                      e.preventDefault();
+                      window.app.pushState({}, `/users/${c.user_id}`);
+                    }}>
+                    {c.user_id}
+                  </a>{' '}
+                  wrote...
                 </h4>
                 <p>{c.content}</p>
                 {window.app.state.authUser &&
                 (window.app.state.authUser.id === c.user_id ||
                   window.app.state.authUser.role === 'ADMIN') ? (
                   <p style={{fontSize: 'smaller'}}>
-                    [<a href="" onClick={this.deleteComment(c.id)}>
+                    <button onClick={this.deleteComment(c.id)}>
                       Delete Comment
-                    </a>]
+                    </button>
                   </p>
                 ) : null}
               </div>

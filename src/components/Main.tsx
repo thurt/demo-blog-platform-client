@@ -105,11 +105,25 @@ export class Main extends React.Component<{}, State> {
             justifyContent: 'space-between',
           }}>
           <h1>
-            <a href="/">Demo Blog Platform</a>
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault();
+                window.app.pushState({}, '/');
+              }}>
+              Demo Blog Platform
+            </a>
           </h1>
           {a && a.role === 'ADMIN' && !p.includes('/editor') ? (
             <div>
-              <a href="/editor">Go To Editor</a>
+              <a
+                href="/editor"
+                onClick={e => {
+                  e.preventDefault();
+                  window.app.pushState({}, '/editor');
+                }}>
+                Go To Editor
+              </a>
             </div>
           ) : null}
           <LoginStatus />

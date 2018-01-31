@@ -73,19 +73,23 @@ export class Post extends React.Component<{}, State> {
             ) : (
               <p>
                 <a
-                  href=""
-                  onClick={() =>
+                  href={`/login?referrer=${window.location.pathname}`}
+                  onClick={e => {
+                    e.preventDefault();
                     window.app.pushState(
                       {},
                       `/login?referrer=${window.location.pathname}`,
-                    )
-                  }>
+                    );
+                  }}>
                   Click here to login
                 </a>
                 <br />Or{' '}
                 <a
-                  href=""
-                  onClick={() => window.app.pushState({}, '/create-user')}>
+                  href="/create-user"
+                  onClick={e => {
+                    e.preventDefault();
+                    window.app.pushState({}, '/create-user');
+                  }}>
                   create a user
                 </a>{' '}
                 if you don&#39;t have one already.

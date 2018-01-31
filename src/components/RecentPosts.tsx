@@ -46,7 +46,14 @@ export class RecentPosts extends React.Component<{}, State> {
               <div key={p.id}>
                 <h4>
                   {new Date(p.created).toLocaleDateString() + ' '}
-                  <a href={`/posts/${p.slug}`}>{p.title}</a>
+                  <a
+                    href={`/posts/${p.slug}`}
+                    onClick={e => {
+                      e.preventDefault();
+                      window.app.pushState({}, `/posts/${p.slug}`);
+                    }}>
+                    {p.title}
+                  </a>
                 </h4>
               </div>
             );
