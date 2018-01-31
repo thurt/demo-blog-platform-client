@@ -109,8 +109,10 @@ export class User extends React.Component<{}, State> {
             </button>
             <ul>
               <li>Role: {u.role}</li>
-              <li>Member Since: {u.created}</li>
-              <li>Last Active: {u.last_active}</li>
+              <li>Member Since: {new Date(u.created).toLocaleDateString()}</li>
+              <li>
+                Last Active: {new Date(u.last_active).toLocaleDateString()}
+              </li>
             </ul>
           </div>
         ) : null}
@@ -123,7 +125,7 @@ export class User extends React.Component<{}, State> {
               <div key={c.id}>
                 <h4>
                   <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
-                    {c.created}
+                    {new Date(c.created).toLocaleDateString()}
                   </em>
                   <br />
                   {c.user_id + ' wrote... (in '}
