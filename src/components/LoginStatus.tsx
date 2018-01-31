@@ -2,7 +2,17 @@ import * as React from 'react';
 
 export class LoginStatus extends React.Component<{}, {}> {
   static login() {
-    window.app.pushState({}, `/login?referrer=${window.location.pathname}`);
+    let referrer: string;
+    if (window.location.pathname === '/login') {
+      // relay old referrer when clicking "Login" while already on the login page
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('referrer')) {
+        referrer = params.get('referrer');
+      }
+    } else {
+      referrer = window.location.pathname;
+    }
+    window.app.pushState({}, `/login?referrer=${referrer}`);
   }
   static logout() {
     window.app.pushState({authUser: undefined}, '/');
