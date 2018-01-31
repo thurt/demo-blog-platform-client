@@ -78,7 +78,12 @@ export class User extends React.Component<{}, State> {
           cs.map((c, i) => {
             return (
               <div key={c.id}>
-                <h3>
+                <h4>
+                  <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
+                    {c.created}
+                  </em>
+                  <br />
+                  {c.user_id + ' wrote... (in '}
                   <a
                     href={`/posts/${ps[Number(c.post_id)].slug}`}
                     onClick={e => {
@@ -87,12 +92,11 @@ export class User extends React.Component<{}, State> {
                         {},
                         `/posts/${ps[Number(c.post_id)].slug}`,
                       );
-                      return false;
                     }}>
                     {ps[Number(c.post_id)].title}
                   </a>
-                </h3>
-                <h4>Commented on: {c.created}</h4>
+                  {')'}
+                </h4>
                 <p>{c.content}</p>
               </div>
             );
