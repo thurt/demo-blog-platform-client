@@ -31,11 +31,9 @@ export class Home extends React.Component<{}, {}> {
 
   render() {
     return (
-      <div>
+      <div style={{display: 'flex', flex: 1}}>
         {window.app.state.isSetup === true ? (
-          <div>
-            <RecentPosts />
-          </div>
+          <RecentPosts />
         ) : (
           <em>Loading...</em>
         )}

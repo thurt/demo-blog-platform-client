@@ -36,7 +36,7 @@ export class RecentPosts extends React.Component<{}, State> {
   render() {
     const ps = this.state.posts;
     return (
-      <div>
+      <div style={{width: '100%'}}>
         <h3>Recent Posts</h3>
         {ps === undefined ? <em>Loading...</em> : null}
         {ps && ps.length === 0 ? <em>This blog has no posts yet!</em> : null}
@@ -44,7 +44,7 @@ export class RecentPosts extends React.Component<{}, State> {
           ps.map((p, i) => {
             return (
               <div key={p.id}>
-                <h4>
+                <h4 style={{wordBreak: 'break-word'}}>
                   {new Date(p.created).toLocaleDateString() + ' '}
                   <a
                     href={`/posts/${p.slug}`}
