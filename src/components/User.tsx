@@ -64,6 +64,49 @@ export class User extends React.Component<{}, State> {
             <h3>
               {u.id} (<a href={`mailto:${u.email}`}>{u.email}</a>)
             </h3>
+            <button
+              onClick={async e => {
+                const b = e.currentTarget;
+                let msg: string;
+                let newStateOnSuccess: {[prop: string]: any};
+
+                if (u.role === 'ADMIN') {
+                  msg =
+                    'Deleting the admin account will require you to go through the setup process again before your blog can be used.\n\nDeleting this account does not affect any pre-existing posts, comments, and other user accounts. Only comments that have been added by this admin account will be deleted.\n\nAre you sure you want to delete this account?';
+                  newStateOnSuccess = {authUser: undefined, isSetup: false};
+                } else {
+                  msg =
+                    'Any comments that have been added with this account will also be deleted.\n\nAre you sure you want to delete this account?';
+                  newStateOnSuccess = {authUser: undefined};
+                }
+
+                if (window.confirm(msg)) {
+                  b.disabled = true;
+                  try {
+                    await users.deleteUser(
+                      {id: u.id},
+                      {
+                        headers: {
+                          Authorization: `Bearer ${
+                            window.app.state.authUser.access_token
+                          }`,
+                        },
+                      },
+                    );
+                    window.Notify.addNotification({
+                      title: 'Success!',
+                      message: 'User account was deleted',
+                      level: 'success',
+                    });
+                    window.app.pushState(newStateOnSuccess, '/');
+                  } catch (e) {
+                    error.Handle(e);
+                    b.disabled = false;
+                  }
+                }
+              }}>
+              Delete account
+            </button>
             <ul>
               <li>Role: {u.role}</li>
               <li>Member Since: {u.created}</li>

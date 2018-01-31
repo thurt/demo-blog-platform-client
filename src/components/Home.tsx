@@ -5,7 +5,7 @@ import {RecentPosts} from './RecentPosts';
 
 export class Home extends React.Component<{}, {}> {
   async componentDidMount() {
-    if (window.app.state.isSetup === undefined) {
+    if (window.app.state.isSetup !== true) {
       try {
         const isSetup = await setup.isSetup();
         // using type guard to notify tsc that isSetup is actually a boolean even though isSetup() is typed to return "{value: boolean}".
