@@ -5,7 +5,7 @@ export class NotFound extends React.Component<{}, {}> {
   render() {
     return (
       <Page>
-        <h2>404: Not Found</h2>
+        <h2>Not Found</h2>
         <p>
           {'The provided path "' +
             window.location.pathname +
@@ -15,6 +15,7 @@ export class NotFound extends React.Component<{}, {}> {
           <b>
             Click{' '}
             <a
+              href="/"
               onClick={e => {
                 e.preventDefault();
                 window.app.pushState({}, '/');
