@@ -1,0 +1,23 @@
+html,
+body {
+  margin: 0;
+  display: flex;
+  flex: 1;
+  min-height: 100%;
+  max-width: 100%;
+}
+
+#main-wrapper,
+#main {
+  display: flex;
+  flex: 1;
+  max-width: 100%;
+}
+
+#main {
+  flex-direction: column;
+}
+
+button {
+  cursor: pointer;
+}
