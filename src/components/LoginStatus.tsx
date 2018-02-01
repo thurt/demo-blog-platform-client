@@ -21,31 +21,35 @@ export class LoginStatus extends React.Component<{}, {}> {
   }
 
   render() {
-    return (
+    return window.app.state.authUser === undefined ? (
       <div>
-        {window.app.state.authUser === undefined ? (
-          <a href="/login" onClick={LoginStatus.login}>
-            Login
-          </a>
-        ) : (
-          <div>
-            {'Logged in as '}
-            <a
-              href={`/users/${window.app.state.authUser.id}`}
-              onClick={e => {
-                e.preventDefault();
-                window.app.pushState(
-                  {},
-                  `/users/${window.app.state.authUser.id}`,
-                );
-              }}>
-              {window.app.state.authUser.id}
-            </a>
-            <a href="/" onClick={LoginStatus.logout}>
-              Logout
-            </a>
-          </div>
-        )}
+        <a
+          href="/create-user"
+          onClick={e => {
+            e.preventDefault();
+            window.app.pushState({}, '/create-user');
+          }}>
+          Create User
+        </a>
+        <span> | </span>
+        <a href="/login" onClick={LoginStatus.login}>
+          Login
+        </a>
+      </div>
+    ) : (
+      <div>
+        {'Logged in as '}
+        <a
+          href={`/users/${window.app.state.authUser.id}`}
+          onClick={e => {
+            e.preventDefault();
+            window.app.pushState({}, `/users/${window.app.state.authUser.id}`);
+          }}>
+          {window.app.state.authUser.id}
+        </a>
+        <a href="/" onClick={LoginStatus.logout}>
+          Logout
+        </a>
       </div>
     );
   }
