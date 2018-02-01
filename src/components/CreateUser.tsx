@@ -4,6 +4,7 @@ import * as error from '../error';
 import * as form from '../form';
 import {CmsCreateUserRequest} from 'cms-client-api';
 import {CreateUserForm} from './CreateUserForm';
+import {Page} from './Page';
 
 async function handleSubmit(r: {id: string; password: string; email: string}) {
   try {
@@ -35,10 +36,10 @@ export class CreateUser extends React.Component<{}, {}> {
 
   render() {
     return (
-      <div>
+      <Page>
         <h2>Create User</h2>
         <CreateUserForm submit={handleSubmit} />
-      </div>
+      </Page>
     );
   }
 }

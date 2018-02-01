@@ -103,6 +103,7 @@ export class Main extends React.Component<{}, State> {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            padding: '0 4vw',
           }}>
           <h1>
             <a

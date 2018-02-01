@@ -2,6 +2,7 @@ import * as React from 'react';
 import {posts, users, streamRequest, basePath} from '../api';
 import * as error from '../error';
 import {CmsUser, CmsComment, CmsPost} from 'cms-client-api';
+import {Page} from './Page';
 
 type commentChunk = {
   done: boolean;
@@ -56,7 +57,7 @@ export class User extends React.Component<{}, State> {
     const cs = this.state.comments;
     const ps = this.state.posts;
     return (
-      <div>
+      <Page>
         <h2>User Profile</h2>
         {u === undefined ? <em>Loading...</em> : null}
         {u ? (
@@ -146,7 +147,7 @@ export class User extends React.Component<{}, State> {
               </div>
             );
           })}
-      </div>
+      </Page>
     );
   }
 }

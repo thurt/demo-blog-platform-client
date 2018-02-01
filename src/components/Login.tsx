@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as form from '../form';
 import {auth, users} from '../api';
 import * as error from '../error';
+import {Page} from './Page';
 
 export class Login extends React.Component<{}, {}> {
   static async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -46,7 +47,7 @@ export class Login extends React.Component<{}, {}> {
 
   render() {
     return (
-      <div>
+      <Page>
         <h2>Login</h2>
         <form onSubmit={Login.handleSubmit}>
           <label>Id: </label>
@@ -57,7 +58,7 @@ export class Login extends React.Component<{}, {}> {
 
           <input type="submit" value="Login" />
         </form>
-      </div>
+      </Page>
     );
   }
 }

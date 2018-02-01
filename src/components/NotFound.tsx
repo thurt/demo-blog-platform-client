@@ -1,9 +1,10 @@
 import * as React from 'react';
+import {Page} from './Page';
 
 export class NotFound extends React.Component<{}, {}> {
   render() {
     return (
-      <div>
+      <Page>
         <h2>404: Not Found</h2>
         <p>
           {'The provided path "' +
@@ -23,7 +24,7 @@ export class NotFound extends React.Component<{}, {}> {
             to go back home.
           </b>
         </p>
-      </div>
+      </Page>
     );
   }
 }

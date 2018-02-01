@@ -3,6 +3,7 @@ import {auth, setup} from '../api';
 import * as error from '../error';
 import * as form from '../form';
 import {CreateUserForm} from './CreateUserForm';
+import {Page} from './Page';
 
 export class Setup extends React.Component<{}, {}> {
   constructor(props: {}) {
@@ -35,7 +36,7 @@ export class Setup extends React.Component<{}, {}> {
 
   render() {
     return (
-      <div>
+      <Page>
         <h2>Setup Admin account</h2>
         <p>
           {
@@ -43,7 +44,7 @@ export class Setup extends React.Component<{}, {}> {
           }
         </p>
         <CreateUserForm submit={this.handleSubmit} />
-      </div>
+      </Page>
     );
   }
 }

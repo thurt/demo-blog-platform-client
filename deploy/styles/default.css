@@ -6,11 +6,11 @@ body {
 
 #main-wrapper,
 #main {
-  height: 100%;
+  display: flex;
+  flex: 1;
 }
 
 #main {
-  display: flex;
   flex-direction: column;
 }
 

@@ -2,6 +2,7 @@ import * as React from 'react';
 import {setup} from '../api';
 import * as error from '../error';
 import {RecentPosts} from './RecentPosts';
+import {Page} from './Page';
 
 export class Home extends React.Component<{}, {}> {
   async componentDidMount() {
@@ -31,13 +32,13 @@ export class Home extends React.Component<{}, {}> {
 
   render() {
     return (
-      <div style={{display: 'flex', flex: 1}}>
+      <Page>
         {window.app.state.isSetup === true ? (
           <RecentPosts />
         ) : (
           <em>Loading...</em>
         )}
-      </div>
+      </Page>
     );
   }
 }

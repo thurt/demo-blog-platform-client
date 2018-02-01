@@ -4,6 +4,7 @@ import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
 import {Comments} from './Comments';
 import {CreateComment} from './CreateComment';
+import {Page} from './Page';
 
 type State = {
   post: CmsPost;
@@ -39,7 +40,7 @@ export class Post extends React.Component<{}, State> {
   render() {
     const p = this.state.post;
     return (
-      <div style={{display: 'flex', flex: 1}}>
+      <Page>
         {p === undefined ? <em>Loading...</em> : null}
         {p ? (
           <div style={{width: '100%'}}>
@@ -97,7 +98,7 @@ export class Post extends React.Component<{}, State> {
             )}
           </div>
         ) : null}
-      </div>
+      </Page>
     );
   }
 }
