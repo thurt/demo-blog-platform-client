@@ -123,7 +123,7 @@ export class Main extends React.Component<{}, State> {
                   e.preventDefault();
                   window.app.pushState({}, '/editor');
                 }}>
-                Go To Editor
+                Go to Post Editor
               </a>
             </div>
           ) : null}
