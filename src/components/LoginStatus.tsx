@@ -47,6 +47,7 @@ export class LoginStatus extends React.Component<{}, {}> {
           }}>
           {window.app.state.authUser.id}
         </a>
+        <span> | </span>
         <a href="/" onClick={LoginStatus.logout}>
           Logout
         </a>
