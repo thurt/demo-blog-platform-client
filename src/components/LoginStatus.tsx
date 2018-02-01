@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 export class LoginStatus extends React.Component<{}, {}> {
-  static login() {
+  static login(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
     let referrer: string;
     if (window.location.pathname === '/login') {
       // relay old referrer when clicking "Login" while already on the login page
@@ -14,7 +15,8 @@ export class LoginStatus extends React.Component<{}, {}> {
     }
     window.app.pushState({}, `/login?referrer=${referrer}`);
   }
-  static logout() {
+  static logout(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
     window.app.pushState({authUser: undefined}, '/');
   }
 
@@ -22,7 +24,9 @@ export class LoginStatus extends React.Component<{}, {}> {
     return (
       <div>
         {window.app.state.authUser === undefined ? (
-          <button onClick={LoginStatus.login}>Login</button>
+          <a href="/login" onClick={LoginStatus.login}>
+            Login
+          </a>
         ) : (
           <div>
             {'Logged in as '}
@@ -37,7 +41,9 @@ export class LoginStatus extends React.Component<{}, {}> {
               }}>
               {window.app.state.authUser.id}
             </a>
-            <button onClick={LoginStatus.logout}>Logout</button>
+            <a href="/" onClick={LoginStatus.logout}>
+              Logout
+            </a>
           </div>
         )}
       </div>
