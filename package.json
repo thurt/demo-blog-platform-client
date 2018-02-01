@@ -22,8 +22,7 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "test": "echo \"no tests specified\" && exit 0",
-    "build": "webpack && cp ./node_modules/demo-mvvm-note-app/dist/* ./deploy/editor/"
+    "test": "echo \"no tests specified\" && exit 0"
   },
   "author": "thurt",
   "license": "ISC",
