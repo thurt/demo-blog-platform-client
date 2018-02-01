@@ -43,7 +43,7 @@ export class RecentPosts extends React.Component<{}, State> {
         {ps &&
           ps.map((p, i) => {
             return (
-              <div key={p.id} style={{display: 'flex', margin: '-10px 0'}}>
+              <div key={p.id} style={{display: 'flex'}}>
                 <h4>{new Date(p.created).toLocaleDateString() + ' '}</h4>
                 <h4 style={{paddingLeft: '0.5em', wordBreak: 'break-word'}}>
                   <a
