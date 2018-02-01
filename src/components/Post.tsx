@@ -58,7 +58,9 @@ export class Post extends React.Component<{}, State> {
               style={{wordBreak: 'break-word'}}
               dangerouslySetInnerHTML={{__html: p.content}}
             />
+            <hr />
             <Comments id={p.id} _refresh={this.state.refreshComments} />
+            <br />
             <h4>Join the discussion</h4>
             {window.app.state.authUser && window.app.state.authUser.id ? (
               <CreateCommentForm
