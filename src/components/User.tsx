@@ -134,18 +134,21 @@ export class User extends React.Component<{}, State> {
                     {new Date(c.created).toLocaleDateString()}
                   </em>
                   <br />
-                  {c.user_id + ' wrote... (in '}
-                  <a
-                    href={`/posts/${ps[Number(c.post_id)].slug}`}
-                    onClick={e => {
-                      e.preventDefault();
-                      window.app.pushState(
-                        {},
-                        `/posts/${ps[Number(c.post_id)].slug}`,
-                      );
-                    }}>
-                    {ps[Number(c.post_id)].title}
-                  </a>
+                  {c.user_id + ' wrote... '}
+                  <span style={{fontSize: 'smaller'}}>
+                    {'(in '}
+                    <a
+                      href={`/posts/${ps[Number(c.post_id)].slug}`}
+                      onClick={e => {
+                        e.preventDefault();
+                        window.app.pushState(
+                          {},
+                          `/posts/${ps[Number(c.post_id)].slug}`,
+                        );
+                      }}>
+                      {ps[Number(c.post_id)].title}
+                    </a>
+                  </span>
                   {')'}
                 </h4>
                 <p>{c.content}</p>
