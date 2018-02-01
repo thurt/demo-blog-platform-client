@@ -11,7 +11,7 @@ type Props = {
   createdComment: () => void;
 };
 
-export class CreateComment extends React.Component<Props, {}> {
+export class CreateCommentForm extends React.Component<Props, {}> {
   constructor(p: Props) {
     super(p);
     this.handleSubmit = this.handleSubmit.bind(this);

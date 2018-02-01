@@ -3,7 +3,7 @@ import {posts} from '../api';
 import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
 import {Comments} from './Comments';
-import {CreateComment} from './CreateComment';
+import {CreateCommentForm} from './CreateCommentForm';
 import {Page} from './Page';
 
 type State = {
@@ -61,7 +61,7 @@ export class Post extends React.Component<{}, State> {
             <Comments id={p.id} _refresh={this.state.refreshComments} />
             <h4>Join the discussion</h4>
             {window.app.state.authUser && window.app.state.authUser.id ? (
-              <CreateComment
+              <CreateCommentForm
                 user_id={window.app.state.authUser.id}
                 post_id={p.id}
                 access_token={window.app.state.authUser.access_token}
