@@ -112,7 +112,7 @@ export class Main extends React.Component<{}, State> {
                 e.preventDefault();
                 window.app.pushState({}, '/');
               }}>
-              Demo Blog Platform
+              Demo Blog
             </a>
           </h1>
           {a && a.role === 'ADMIN' && !p.includes('/editor') ? (
