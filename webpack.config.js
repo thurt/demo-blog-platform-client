@@ -1,3 +1,5 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry: './src/index.tsx',
   output: {
@@ -22,6 +24,14 @@ module.exports = {
     ],
   },
 
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: './src/index.html',
+        to: '../index.html',
+      },
+    ]),
+  ],
   // when importing a module whose path matches one of the following, just assume a corresponding global variable exists and use that instead. This is important b/c it allows us to avoid bundling all of our dependencies, which allows browsers to cache those libraries between builds
   externals: {
     react: 'React',
