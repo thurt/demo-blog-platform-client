@@ -49,7 +49,13 @@ export class Login extends React.Component<{}, {}> {
     return (
       <Page>
         <h2>Login</h2>
-        <form onSubmit={Login.handleSubmit}>
+        <form
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}
+          onSubmit={Login.handleSubmit}>
           <label>Id: </label>
           <input name="id" type="text" autoFocus={true} required />
 

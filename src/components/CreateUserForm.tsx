@@ -62,7 +62,13 @@ export class CreateUserForm extends React.Component<Props, {}> {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+        }}
+        onSubmit={this.handleSubmit}>
         <label>Email: </label>
         <input name="email" type="email" required />
 
