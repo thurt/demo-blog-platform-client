@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "@types/react": "^16.0.34",
-    "@types/react-dom": "^16.0.3",
-    "@types/react-notification-system": "^0.2.35",
     "can-ndjson-stream": "^0.1.7",
     "cms-client-api": "github:thurt/cms-client-api",
     "demo-mvvm-note-app": "github:thurt/demo-mvvm-note-app#posts-model",
@@ -15,6 +12,9 @@
     "storage-manager": "github:thurt/storage-manager"
   },
   "devDependencies": {
+    "@types/react": "^16.0.34",
+    "@types/react-dom": "^16.0.3",
+    "@types/react-notification-system": "^0.2.35",
     "awesome-typescript-loader": "^3.4.1",
     "copy-webpack-plugin": "^4.3.1",
     "source-map-loader": "^0.2.3",
