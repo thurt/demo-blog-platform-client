@@ -91,7 +91,7 @@ export class Post extends React.Component<{}, State> {
                     e.preventDefault();
                     window.app.pushState({}, '/create-user');
                   }}>
-                  create a user
+                  create a user account
                 </a>{' '}
                 if you don&#39;t have one already.
               </p>
