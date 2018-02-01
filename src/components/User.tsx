@@ -123,13 +123,12 @@ export class User extends React.Component<{}, State> {
         {cs &&
           cs.map((c, i) => {
             return (
-              <div key={c.id}>
+              <div key={c.id} style={{marginLeft: '1vw'}}>
                 <h4
                   style={{
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    marginLeft: '1vw',
                   }}>
                   <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
                     {new Date(c.created).toLocaleDateString()}
