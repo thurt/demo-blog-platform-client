@@ -38,8 +38,8 @@ export class LoginStatus extends React.Component<{}, {}> {
       </div>
     ) : (
       <div>
-        {'Logged in as '}
         <a
+          style={{fontWeight: 'bold'}}
           href={`/users/${window.app.state.authUser.id}`}
           onClick={e => {
             e.preventDefault();
