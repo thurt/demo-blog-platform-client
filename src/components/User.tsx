@@ -3,6 +3,7 @@ import {posts, users, streamRequest, basePath} from '../api';
 import * as error from '../error';
 import {CmsUser, CmsComment, CmsPost} from 'cms-client-api';
 import {Page} from './Page';
+import * as date from '../date';
 
 type commentChunk = {
   done: boolean;
@@ -110,9 +111,9 @@ export class User extends React.Component<{}, State> {
             </button>
             <ul>
               <li>Role: {u.role}</li>
-              <li>Member Since: {new Date(u.created).toLocaleDateString()}</li>
+              <li>Member Since: {date.GMT(u.created).toLocaleDateString()}</li>
               <li>
-                Last Active: {new Date(u.last_active).toLocaleDateString()}
+                Last Active: {date.GMT(u.last_active).toLocaleDateString()}
               </li>
             </ul>
           </div>
@@ -124,37 +125,35 @@ export class User extends React.Component<{}, State> {
           cs.map((c, i) => {
             return (
               <div key={c.id} style={{marginLeft: '1vw'}}>
-                <h4
-                  style={{
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}>
-                  <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
-                    {new Date(c.created).toLocaleDateString()}
-                  </em>
-                  <br />
-                  {c.user_id + ' wrote... '}
-                  <span style={{fontSize: 'smaller'}}>
-                    {'(in '}
-                    <a
-                      href={`/posts/${ps[Number(c.post_id)].slug}`}
-                      onClick={e => {
-                        e.preventDefault();
-                        window.app.pushState(
-                          {},
-                          `/posts/${ps[Number(c.post_id)].slug}`,
-                        );
-                      }}>
-                      {ps[Number(c.post_id)].title}
-                    </a>
-                  </span>
-                  {')'}
-                </h4>
-                <p>{c.content}</p>
-              </div>
-            );
-          })}
+                  <h5
+                    style={{
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}>
+                    <em>
+                      {date.GMT(c.created).toLocaleDateString()}
+                      <br />
+                      {'in '}
+                      <a
+                        href={`/posts/${ps[Number(c.post_id)].slug}`}
+                        onClick={e => {
+                          e.preventDefault();
+                          window.app.pushState(
+                            {},
+                            `/posts/${ps[Number(c.post_id)].slug}`,
+                          );
+                        }}>
+                        {ps[Number(c.post_id)].title}
+                      </a>
+                    </em>
+                  </h5>
+                  <p>{c.content}</p>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
       </Page>
     );
   }

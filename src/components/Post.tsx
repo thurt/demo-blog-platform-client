@@ -5,6 +5,7 @@ import {CmsPost} from 'cms-client-api';
 import {Comments} from './Comments';
 import {CreateCommentForm} from './CreateCommentForm';
 import {Page} from './Page';
+import * as date from '../date';
 
 type State = {
   post: CmsPost;
@@ -46,11 +47,11 @@ export class Post extends React.Component<{}, State> {
           <div style={{width: '100%'}}>
             <h2 style={{wordBreak: 'break-word'}}>{p.title}</h2>
             <h4>
-              {new Date(p.created).toDateString()}
+              {date.GMT(p.created).toDateString()}
               <br />
-              {isGtDay(new Date(p.created), new Date(p.last_edited)) ? (
+              {isGtDay(date.GMT(p.created), date.GMT(p.last_edited)) ? (
                 <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
-                  (edited: {new Date(p.last_edited).toDateString()})
+                  (edited: {date.GMT(p.last_edited).toDateString()})
                 </em>
               ) : null}
             </h4>

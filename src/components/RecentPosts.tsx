@@ -2,6 +2,7 @@ import * as React from 'react';
 import {streamRequest, basePath} from '../api';
 import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
+import * as date from '../date';
 
 type postChunk = {
   done: boolean;
@@ -44,7 +45,7 @@ export class RecentPosts extends React.Component<{}, State> {
           ps.map((p, i) => {
             return (
               <div key={p.id} style={{display: 'flex'}}>
-                <h4>{new Date(p.created).toLocaleDateString() + ' '}</h4>
+                <h4>{date.GMT(p.created).toLocaleDateString() + ' '}</h4>
                 <h4 style={{paddingLeft: '0.5em', wordBreak: 'break-word'}}>
                   <a
                     href={`/posts/${p.slug}`}
