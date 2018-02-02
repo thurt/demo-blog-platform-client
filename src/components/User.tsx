@@ -125,35 +125,33 @@ export class User extends React.Component<{}, State> {
           cs.map((c, i) => {
             return (
               <div key={c.id} style={{marginLeft: '1vw'}}>
-                  <h5
-                    style={{
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}>
-                    <em>
-                      {date.GMT(c.created).toLocaleDateString()}
-                      <br />
-                      {'in '}
-                      <a
-                        href={`/posts/${ps[Number(c.post_id)].slug}`}
-                        onClick={e => {
-                          e.preventDefault();
-                          window.app.pushState(
-                            {},
-                            `/posts/${ps[Number(c.post_id)].slug}`,
-                          );
-                        }}>
-                        {ps[Number(c.post_id)].title}
-                      </a>
-                    </em>
-                  </h5>
-                  <p>{c.content}</p>
-                </div>
-              );
-            })}
-          </div>
-        ) : null}
+                <h5
+                  style={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}>
+                  <em>
+                    {date.GMT(c.created).toLocaleDateString()}
+                    <br />
+                    {'in '}
+                    <a
+                      href={`/posts/${ps[Number(c.post_id)].slug}`}
+                      onClick={e => {
+                        e.preventDefault();
+                        window.app.pushState(
+                          {},
+                          `/posts/${ps[Number(c.post_id)].slug}`,
+                        );
+                      }}>
+                      {ps[Number(c.post_id)].title}
+                    </a>
+                  </em>
+                </h5>
+                <p>{c.content}</p>
+              </div>
+            );
+          })}
       </Page>
     );
   }
