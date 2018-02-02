@@ -38,7 +38,8 @@ export class RecentPosts extends React.Component<{}, State> {
     const ps = this.state.posts;
     return (
       <div style={{width: '100%'}}>
-        <h3>Recent Posts</h3>
+        <h2>Recent Posts</h2>
+        <hr />
         {ps === undefined ? <em>Loading...</em> : null}
         {ps && ps.length === 0 ? <em>This blog has no posts yet!</em> : null}
         {ps &&
