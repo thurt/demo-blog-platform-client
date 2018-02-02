@@ -76,12 +76,16 @@ export class Comments extends React.Component<Props, State> {
     return (
       <div style={{marginTop: '2vw', display: 'flex', flexDirection: 'column'}}>
         <h3>Comments</h3>
-        {cs === undefined ? <em>Loading...</em> : null}
-        {cs && cs.length === 0 ? <em>This post has no comments yet!</em> : null}
+        {cs === undefined ? (
+          <em style={{marginLeft: '1vw'}}>Loading...</em>
+        ) : null}
+        {cs && cs.length === 0 ? (
+          <em style={{marginLeft: '1vw'}}>This post has no comments yet!</em>
+        ) : null}
         {cs &&
           cs.map((c, i) => {
             return (
-              <div key={c.id}>
+              <div key={c.id} style={{marginLeft: '1vw'}}>
                 <h4>
                   <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
                     {date.GMT(c.created).toLocaleString()}
