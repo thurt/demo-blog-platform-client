@@ -120,12 +120,15 @@ export class User extends React.Component<{}, State> {
                 }}>
                 {u.id} (<a href={`mailto:${u.email}`}>{u.email}</a>)
               </h3>
-              <button
-                style={{alignSelf: 'center'}}
-                className="btn btn-danger btn-sm"
-                onClick={User.onDeleteUser(u)}>
-                Delete account
-              </button>
+              {window.app.state.authUser &&
+              window.app.state.authUser.id === u.id ? (
+                <button
+                  style={{alignSelf: 'center'}}
+                  className="btn btn-danger btn-sm"
+                  onClick={User.onDeleteUser(u)}>
+                  Delete account
+                </button>
+              ) : null}
             </div>
             <hr />
             <ul>
