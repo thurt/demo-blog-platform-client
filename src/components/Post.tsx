@@ -55,11 +55,12 @@ export class Post extends React.Component<{}, State> {
                 </em>
               ) : null}
             </h4>
+            <hr />
             <div
               style={{wordBreak: 'break-word', fontSize: '14pt'}}
               dangerouslySetInnerHTML={{__html: p.content}}
             />
-            <hr />
+            <br />
             <Comments id={p.id} _refresh={this.state.refreshComments} />
             <br />
             <h4>Join the discussion</h4>
