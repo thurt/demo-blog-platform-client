@@ -56,7 +56,7 @@ export class Post extends React.Component<{}, State> {
               ) : null}
             </h4>
             <div
-              style={{wordBreak: 'break-word'}}
+              style={{wordBreak: 'break-word', fontSize: '14pt'}}
               dangerouslySetInnerHTML={{__html: p.content}}
             />
             <hr />
