@@ -60,8 +60,6 @@ export class Post extends React.Component<{}, State> {
               style={{wordBreak: 'break-word', fontSize: '14pt'}}
               dangerouslySetInnerHTML={{__html: p.content}}
             />
-            <br />
-            <br />
             <Comments id={p.id} _refresh={this.state.refreshComments} />
             <br />
             <h4>Join the discussion</h4>

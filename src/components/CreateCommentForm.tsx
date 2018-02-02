@@ -59,7 +59,7 @@ export class CreateCommentForm extends React.Component<Props, {}> {
   render() {
     return (
       <form
-        style={{display: 'flex', flexDirection: 'column', width: '500px'}}
+        style={{display: 'flex', flexDirection: 'column', maxWidth: '500px'}}
         onSubmit={this.handleSubmit}>
         <textarea
           style={{height: '100px', resize: 'vertical'}}

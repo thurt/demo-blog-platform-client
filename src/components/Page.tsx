@@ -7,7 +7,10 @@ export function Page(props: {children: any}) {
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
-        margin: '0 6vw 10em',
+        padding: '2vw 6vw 10em',
+        width: '100%',
+        maxWidth: '1024px',
+        alignSelf: 'center',
       }}>
       {props.children}
     </main>
