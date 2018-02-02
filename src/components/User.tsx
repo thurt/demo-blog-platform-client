@@ -105,16 +105,29 @@ export class User extends React.Component<{}, State> {
         <h2>User Profile</h2>
         {u === undefined ? <em>Loading...</em> : null}
         {u ? (
-          <div style={{display: 'flex', flexDirection: 'column'}}>
-            <h3>
-              {u.id} (<a href={`mailto:${u.email}`}>{u.email}</a>)
-            </h3>
-            <button
-              style={{display: 'float'}}
-              className="btn btn-danger btn-sm"
-              onClick={User.onDeleteUser(u)}>
-              Delete account
-            </button>
+          <div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <h3
+                style={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}>
+                {u.id} (<a href={`mailto:${u.email}`}>{u.email}</a>)
+              </h3>
+              <button
+                style={{alignSelf: 'center'}}
+                className="btn btn-danger btn-sm"
+                onClick={User.onDeleteUser(u)}>
+                Delete account
+              </button>
+            </div>
+            <hr />
             <ul>
               <li>Role: {u.role}</li>
               <li>Member Since: {date.GMT(u.created).toLocaleDateString()}</li>
