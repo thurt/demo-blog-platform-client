@@ -67,6 +67,7 @@ export class User extends React.Component<{}, State> {
               {u.id} (<a href={`mailto:${u.email}`}>{u.email}</a>)
             </h3>
             <button
+              className="btn btn-danger btn-sm"
               onClick={async e => {
                 const b = e.currentTarget;
                 let msg: string;

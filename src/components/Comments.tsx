@@ -2,6 +2,7 @@ import * as React from 'react';
 import {comments, streamRequest, basePath} from '../api';
 import * as error from '../error';
 import {CmsComment} from 'cms-client-api';
+import * as date from '../date';
 
 type commentChunk = {
   done: boolean;
@@ -83,7 +84,7 @@ export class Comments extends React.Component<Props, State> {
               <div key={c.id}>
                 <h4>
                   <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
-                    {c.created}
+                    {date.GMT(c.created).toLocaleString()}
                   </em>
                   <br />
                   <a

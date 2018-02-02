@@ -62,7 +62,7 @@ export class Login extends React.Component<{}, {}> {
           <label>Password: </label>
           <input name="password" type="password" required />
 
-          <input type="submit" value="Login" />
+          <input className="btn btn-primary" type="submit" value="Login" />
         </form>
       </Page>
     );

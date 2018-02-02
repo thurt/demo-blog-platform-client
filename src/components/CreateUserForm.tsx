@@ -80,7 +80,11 @@ export class CreateUserForm extends React.Component<Props, {}> {
         <label>Repeat Password: </label>
         <input name="repeat_password" type="password" required />
 
-        <input type="submit" value="Create Account" />
+        <input
+          className="btn btn-primary"
+          type="submit"
+          value="Create Account"
+        />
       </form>
     );
   }

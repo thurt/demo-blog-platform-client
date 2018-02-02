@@ -67,7 +67,7 @@ export class CreateCommentForm extends React.Component<Props, {}> {
           placeholder="Enter your comments here..."
           required
         />
-        <input type="submit" value="Add Comments" />
+        <input className="btn btn-primary" type="submit" value="Add Comments" />
       </form>
     );
   }
