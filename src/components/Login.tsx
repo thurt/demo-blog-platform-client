@@ -24,8 +24,11 @@ export class Login extends React.Component<{}, {}> {
 
     try {
       // submit values
-      const authUser = await auth.authUser({body: {id, password}});
-      const user = await users.getUser({id});
+      const [authUser, user] = await Promise.all([
+        auth.authUser({body: {id, password}}),
+        users.getUser({id}),
+      ]);
+
       // combine authUser and user keys into app.state.authUser
       const newAuthUser = {authUser: {...authUser, ...user}};
       window.Notify.addNotification({
