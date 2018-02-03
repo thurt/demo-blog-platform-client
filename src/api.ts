@@ -3,21 +3,33 @@ import ndjsonStream = require('can-ndjson-stream'); // This file should be impor
 import * as nprogress from 'nprogress';
 
 let activeReqs = 0;
+const maybeStartProgressIndicator = () => {
+  if (activeReqs++ === 0) {
+    setTimeout(() => {
+      if (activeReqs !== 0 && !nprogress.isStarted()) {
+        nprogress.start();
+      }
+    }, 1000);
+  }
+};
+
 const ph: ProxyHandler<
   api.PostsApi | api.UsersApi | api.AuthApi | api.CommentsApi | api.SetupApi
 > = {
   get(target, name, receiver) {
     return (...args: any[]) => {
-      if (activeReqs++ === 0) {
-        nprogress.start();
-      }
+      maybeStartProgressIndicator();
       //@ts-ignore
       return target[name](...args)
         .then((_: any) => {
           if (--activeReqs === 0) {
-            nprogress.done();
+            if (nprogress.isStarted()) {
+              nprogress.done();
+            }
           } else {
-            nprogress.inc();
+            if (nprogress.isStarted()) {
+              nprogress.inc();
+            }
           }
           return _;
         })
@@ -65,9 +77,7 @@ type chunk = {
 };
 
 export async function streamRequest(path: string, cb: (c: chunk) => void) {
-  if (activeReqs++ === 0 && !nprogress.isStarted()) {
-    nprogress.start();
-  }
+  maybeStartProgressIndicator();
 
   const r = await fetch(path);
   if (!r.ok) {
@@ -80,12 +90,14 @@ export async function streamRequest(path: string, cb: (c: chunk) => void) {
   while (true) {
     c = await reader.read(); // i think this could throw; need to try catch here so can handle the nprogress for streamRequests
     if (c.done) {
-      if (--activeReqs === 0) {
+      if (--activeReqs === 0 && nprogress.isStarted()) {
         nprogress.done();
       }
       break;
     }
-    nprogress.inc();
+    if (nprogress.isStarted()) {
+      nprogress.inc();
+    }
     cb(c);
   }
 }
