@@ -28,7 +28,7 @@ export class User extends React.Component<{}, State> {
     try {
       await Promise.all([
         users.getUser({id}).then(user => this.setState({user})),
-        await streamRequest(
+        streamRequest(
           basePath + path + '/comments',
           async (cc: commentChunk) => {
             const c = cc.value.result;
