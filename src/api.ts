@@ -8,7 +8,7 @@ const ph: ProxyHandler<
 > = {
   get(target, name, receiver) {
     return (...args: any[]) => {
-      if (activeReqs++ === 0 && !nprogress.isStarted()) {
+      if (activeReqs++ === 0) {
         nprogress.start();
       }
       //@ts-ignore
@@ -23,6 +23,7 @@ const ph: ProxyHandler<
         })
         .catch((_: any) => {
           if (--activeReqs === 0) {
+            nprogress.done();
             nprogress.remove();
           }
           return Promise.reject(_);
