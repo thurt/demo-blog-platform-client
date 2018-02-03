@@ -33,7 +33,7 @@ export class Login extends React.Component<{}, {}> {
       const newAuthUser = {authUser: {...authUser, ...user}};
       window.Notify.addNotification({
         title: 'Success!',
-        message: 'Hi, ' + newAuthUser.authUser.id + '. You are now logged in',
+        message: 'Hi, ' + newAuthUser.authUser.id + '. You are now logged in.',
         level: 'success',
       });
       const p = new URLSearchParams(window.location.search);
