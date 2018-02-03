@@ -141,7 +141,6 @@ export class User extends React.Component<{}, State> {
           </div>
         ) : null}
         <h3>Recent Comments</h3>
-        {cs === undefined ? <em>Loading...</em> : null}
         {cs && cs.length === 0 ? <em>This user has no comments!</em> : null}
         {cs &&
           cs.map((c, i) => {
