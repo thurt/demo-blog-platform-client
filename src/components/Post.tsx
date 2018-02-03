@@ -47,7 +47,6 @@ export class Post extends React.Component<{}, State> {
     const id = this.state.pid;
     return (
       <Page>
-        {p === undefined ? <em>Loading...</em> : null}
         {p ? (
           <div style={{width: '100%'}}>
             <h2 style={{wordBreak: 'break-word'}}>{p.title}</h2>

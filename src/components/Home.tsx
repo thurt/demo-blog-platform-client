@@ -35,9 +35,7 @@ export class Home extends React.Component<{}, {}> {
       <Page>
         {window.app.state.isSetup === true ? (
           <RecentPosts />
-        ) : (
-          <em>Loading...</em>
-        )}
+        ) : null}
       </Page>
     );
   }

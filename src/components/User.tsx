@@ -104,7 +104,6 @@ export class User extends React.Component<{}, State> {
     return (
       <Page>
         <h2>User Profile</h2>
-        {u === undefined ? <em>Loading...</em> : null}
         {u ? (
           <div>
             <div

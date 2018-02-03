@@ -76,9 +76,6 @@ export class Comments extends React.Component<Props, State> {
     return (
       <div style={{marginTop: '2vw', display: 'flex', flexDirection: 'column'}}>
         <h3>Comments</h3>
-        {cs === undefined ? (
-          <em style={{marginLeft: '1vw'}}>Loading...</em>
-        ) : null}
         {cs && cs.length === 0 ? (
           <em style={{marginLeft: '1vw'}}>This post has no comments yet!</em>
         ) : null}
