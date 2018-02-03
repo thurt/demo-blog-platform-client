@@ -26,24 +26,25 @@ export class User extends React.Component<{}, State> {
     const path = window.location.pathname;
     const id = path.replace(/\/users\//, '');
     try {
-      const user = await users.getUser({id});
-      this.setState({user});
+      await Promise.all([
+        users.getUser({id}).then(user => this.setState({user})),
+        await streamRequest(
+          basePath + path + '/comments',
+          async (cc: commentChunk) => {
+            const c = cc.value.result;
+            try {
+              const p = await posts.getPost({id: Number(c.post_id)});
+              this.setState({
+                comments: (this.state.comments || []).concat(cc.value.result),
+                posts: {...this.state.posts, [p.id]: p},
+              });
+            } catch (e) {
+              error.Handle(e);
+            }
+          },
+        ),
+      ]);
 
-      await streamRequest(
-        basePath + path + '/comments',
-        async (cc: commentChunk) => {
-          const c = cc.value.result;
-          try {
-            const p = await posts.getPost({id: Number(c.post_id)});
-            this.setState({
-              comments: (this.state.comments || []).concat(cc.value.result),
-              posts: {...this.state.posts, [p.id]: p},
-            });
-          } catch (e) {
-            error.Handle(e);
-          }
-        },
-      );
       // will be true when have finished fetching comments and there were no comments
       if (this.state.comments === undefined) {
         this.setState({comments: []});
@@ -158,12 +159,12 @@ export class User extends React.Component<{}, State> {
                     <br />
                     {'in '}
                     <a
-                      href={`/posts/${ps[Number(c.post_id)].slug}`}
+                      href={`/posts/${c.post_id}/${ps[Number(c.post_id)].slug}`}
                       onClick={e => {
                         e.preventDefault();
                         window.app.pushState(
                           {},
-                          `/posts/${ps[Number(c.post_id)].slug}`,
+                          `/posts/${c.post_id}/${ps[Number(c.post_id)].slug}`,
                         );
                       }}>
                       {ps[Number(c.post_id)].title}
