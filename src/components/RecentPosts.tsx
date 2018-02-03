@@ -49,10 +49,10 @@ export class RecentPosts extends React.Component<{}, State> {
                 <h4>{date.GMT(p.created).toLocaleDateString() + ' '}</h4>
                 <h4 style={{paddingLeft: '0.5em', wordBreak: 'break-word'}}>
                   <a
-                    href={`/posts/${p.slug}`}
+                    href={`/posts/${p.id}/${p.slug}`}
                     onClick={e => {
                       e.preventDefault();
-                      window.app.pushState({}, `/posts/${p.slug}`);
+                      window.app.pushState({}, `/posts/${p.id}/${p.slug}`);
                     }}>
                     {p.title}
                   </a>
