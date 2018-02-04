@@ -72,7 +72,10 @@ type chunk = {
   value: any;
 };
 
-export async function streamRequest(path: string, cb: (c: chunk) => void) {
+export async function streamRequest(
+  path: string,
+  cb: (c: chunk) => void,
+): Promise<Array<any>> {
   maybeStartProgressIndicator();
 
   const r = await fetch(path);
@@ -82,6 +85,7 @@ export async function streamRequest(path: string, cb: (c: chunk) => void) {
 
   const reader = ndjsonStream(r.body).getReader();
 
+  const results = [];
   let c: chunk;
   while (true) {
     c = await reader.read(); // i think this could throw; need to try catch here so can handle the nprogress for streamRequests
@@ -94,6 +98,7 @@ export async function streamRequest(path: string, cb: (c: chunk) => void) {
     if (nprogress.isStarted()) {
       nprogress.inc();
     }
-    cb(c);
+    results.push(cb(c));
   }
+  return results;
 }

@@ -35,16 +35,15 @@ export class User extends React.Component<{}, State> {
             try {
               const p = await posts.getPost({id: Number(c.post_id)});
               this.setState({
-                comments: (this.state.comments || []).concat(cc.value.result),
+                comments: (this.state.comments || []).concat(c),
                 posts: {...this.state.posts, [p.id]: p},
               });
             } catch (e) {
               error.Handle(e);
             }
           },
-        ),
+        ).then(results => Promise.all(results)),
       ]);
-
       // will be true when have finished fetching comments and there were no comments
       if (this.state.comments === undefined) {
         this.setState({comments: []});
