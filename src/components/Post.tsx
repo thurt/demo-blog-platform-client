@@ -13,14 +13,6 @@ type State = {
   pid: CmsPost['id'];
 };
 
-function isGtDay(start: Date, end: Date): boolean {
-  const day = 86400000; // 24hrs*60mins*60s*1000ms = x ms/day
-  if (end.getTime() - start.getTime() > day) {
-    return true;
-  }
-  return false;
-}
-
 export class Post extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
@@ -53,7 +45,7 @@ export class Post extends React.Component<{}, State> {
             <h4>
               {date.GMT(p.created).toDateString()}
               <br />
-              {isGtDay(date.GMT(p.created), date.GMT(p.last_edited)) ? (
+              {date.isGtDay(date.GMT(p.created), date.GMT(p.last_edited)) ? (
                 <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
                   (edited: {date.GMT(p.last_edited).toDateString()})
                 </em>
