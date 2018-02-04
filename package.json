@@ -6,6 +6,7 @@
     "can-ndjson-stream": "^0.1.7",
     "cms-client-api": "github:thurt/cms-client-api",
     "demo-mvvm-note-app": "github:thurt/demo-mvvm-note-app#posts-model",
+    "http-status-codes": "^1.3.0",
     "nprogress": "^0.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

@@ -1,4 +1,5 @@
 import * as api from './api';
+import {getStatusText} from 'http-status-codes';
 
 export function Handle(e: Error | Response) {
   if (e instanceof Error) {
@@ -15,7 +16,10 @@ export function Handle(e: Error | Response) {
       .json()
       .then((apie: api.Error) =>
         window.Notify.addNotification({
-          title: e.statusText,
+          // in http/1.1, the Response.statusText  is included, however http/2 no longer includes
+          // a status phrase so Response.statusText is always empty string
+          // see https://github.com/http2/http2-spec/issues/202
+          title: e.statusText || getStatusText(e.status),
           message: apie.error,
           level: 'error',
         }),
