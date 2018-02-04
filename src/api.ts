@@ -9,7 +9,7 @@ const maybeStartProgressIndicator = () => {
       if (activeReqs !== 0 && !nprogress.isStarted()) {
         nprogress.start();
       }
-    }, 1000);
+    }, 500);
   }
 };
 
@@ -23,13 +23,9 @@ const ph: ProxyHandler<
       return target[name](...args)
         .then((_: any) => {
           if (--activeReqs === 0) {
-            if (nprogress.isStarted()) {
-              nprogress.done();
-            }
-          } else {
-            if (nprogress.isStarted()) {
-              nprogress.inc();
-            }
+            nprogress.done();
+          } else if (nprogress.isStarted()) {
+            nprogress.inc();
           }
           return _;
         })
@@ -90,7 +86,7 @@ export async function streamRequest(path: string, cb: (c: chunk) => void) {
   while (true) {
     c = await reader.read(); // i think this could throw; need to try catch here so can handle the nprogress for streamRequests
     if (c.done) {
-      if (--activeReqs === 0 && nprogress.isStarted()) {
+      if (--activeReqs === 0) {
         nprogress.done();
       }
       break;
