@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {streamRequest, basePath} from '../api';
+import {streamRequest, basePath, Chunk} from '../api';
 import * as error from '../error';
 import {CmsPost} from 'cms-client-api';
 import * as date from '../date';
-
-type postChunk = {
-  done: boolean;
-  value: {result: CmsPost};
-};
 
 type State = {
   posts: Array<CmsPost>;
@@ -21,11 +16,14 @@ export class RecentPosts extends React.Component<{}, State> {
 
   async componentDidMount() {
     try {
-      await streamRequest(basePath + '/posts', (pc: postChunk) => {
-        this.setState({
-          posts: (this.state.posts || []).concat(pc.value.result),
-        });
-      });
+      await streamRequest(
+        basePath + '/posts',
+        (pc: Chunk<{result: CmsPost}>) => {
+          this.setState({
+            posts: (this.state.posts || []).concat(pc.value.result),
+          });
+        },
+      );
 
       // will be true when have finished fetching posts and there were no posts
       if (this.state.posts === undefined) this.setState({posts: []});

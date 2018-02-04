@@ -1,14 +1,9 @@
 import * as React from 'react';
-import {posts, users, streamRequest, basePath} from '../api';
+import {posts, users, streamRequest, basePath, Chunk} from '../api';
 import * as error from '../error';
 import {CmsUser, CmsComment, CmsPost} from 'cms-client-api';
 import {Page} from './Page';
 import * as date from '../date';
-
-type commentChunk = {
-  done: boolean;
-  value: {result: CmsComment};
-};
 
 type State = {
   user: CmsUser;
@@ -30,7 +25,7 @@ export class User extends React.Component<{}, State> {
         users.getUser({id}).then(user => this.setState({user})),
         streamRequest(
           basePath + path + '/comments',
-          async (cc: commentChunk) => {
+          async (cc: Chunk<{result: CmsComment}>) => {
             const c = cc.value.result;
             try {
               const p = await posts.getPost({id: Number(c.post_id)});

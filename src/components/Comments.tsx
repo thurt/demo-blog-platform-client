@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {comments, streamRequest, basePath} from '../api';
+import {comments, streamRequest, basePath, Chunk} from '../api';
 import * as error from '../error';
 import {CmsComment} from 'cms-client-api';
 import * as date from '../date';
-
-type commentChunk = {
-  done: boolean;
-  value: {result: CmsComment};
-};
 
 type State = {
   cs: Array<CmsComment>;
@@ -36,7 +31,7 @@ export class Comments extends React.Component<Props, State> {
     try {
       await streamRequest(
         basePath + '/posts/' + this.props.id + '/comments',
-        (cc: commentChunk) => {
+        (cc: Chunk<{result: CmsComment}>) => {
           cs.push(cc.value.result);
           this.setState({cs});
         },
