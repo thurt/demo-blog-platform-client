@@ -2,56 +2,62 @@ import * as api from 'cms-client-api';
 import ndjsonStream = require('can-ndjson-stream'); // This file should be imported using the CommonJS-style
 import * as nprogress from 'nprogress';
 
-let activeReqs = 0;
-const maybeStartProgressIndicator = () => {
-  if (activeReqs++ === 0) {
-    setTimeout(() => {
-      if (activeReqs !== 0 && !nprogress.isStarted()) {
-        nprogress.start();
-      }
-    }, 500);
+class ProgressIndicator {
+  activeReqs: number;
+  constructor() {
+    this.activeReqs = 0;
   }
-};
+  start() {
+    if (this.activeReqs++ === 0) {
+      setTimeout(() => {
+        if (this.activeReqs !== 0 && !nprogress.isStarted()) {
+          nprogress.start();
+        }
+      }, 500);
+    }
+  }
+  done() {
+    if (--this.activeReqs === 0) {
+      nprogress.done();
+      return true;
+    }
+    return false;
+  }
+  abort() {
+    if (--this.activeReqs === 0) {
+      nprogress.done();
+      nprogress.remove();
+      return true;
+    }
+    return false;
+  }
+  inc() {
+    if (nprogress.isStarted()) {
+      nprogress.inc();
+      return true;
+    }
+    return false;
+  }
+}
 
-const maybeDoneProgressIndicator = () => {
-  if (--activeReqs === 0) {
-    nprogress.done();
-    return true;
-  }
-  return false;
-};
-const maybeAbortProgressIndicator = () => {
-  if (--activeReqs === 0) {
-    nprogress.done();
-    nprogress.remove();
-    return true;
-  }
-  return false;
-};
-const maybeIncProgressIndicator = () => {
-  if (nprogress.isStarted()) {
-    nprogress.inc();
-    return true;
-  }
-  return false;
-};
+const pi = new ProgressIndicator();
 
 const ph: ProxyHandler<
   api.PostsApi | api.UsersApi | api.AuthApi | api.CommentsApi | api.SetupApi
 > = {
   get(target, name, receiver) {
     return (...args: any[]) => {
-      maybeStartProgressIndicator();
+      pi.start();
       //@ts-ignore
       return target[name](...args)
         .then((_: any) => {
-          if (!maybeDoneProgressIndicator()) {
-            maybeIncProgressIndicator();
+          if (!pi.done()) {
+            pi.inc();
           }
           return _;
         })
         .catch((_: any) => {
-          maybeAbortProgressIndicator();
+          pi.abort();
           return Promise.reject(_);
         });
     };
@@ -94,7 +100,7 @@ export async function streamRequest(
   path: string,
   cb: (c: chunk) => void,
 ): Promise<Array<any>> {
-  maybeStartProgressIndicator();
+  pi.start();
 
   const r = await fetch(path);
   if (!r.ok) {
@@ -109,13 +115,13 @@ export async function streamRequest(
     try {
       c = await reader.read();
       if (c.done) {
-        maybeDoneProgressIndicator();
+        pi.done();
         break;
       }
-      maybeIncProgressIndicator();
+      pi.inc();
       results.push(cb(c));
     } catch (e) {
-      maybeDoneProgressIndicator();
+      pi.done();
       throw e;
     }
   }
