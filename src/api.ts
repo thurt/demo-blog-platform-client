@@ -91,14 +91,14 @@ export interface Error {
   code: number;
 }
 
-type chunk = {
+export type Chunk<T> = {
   done: boolean;
-  value: any;
+  value: T;
 };
 
 export async function streamRequest(
   path: string,
-  cb: (c: chunk) => void,
+  cb: (c: Chunk<any>) => void,
 ): Promise<Array<any>> {
   pi.start();
 
@@ -110,7 +110,7 @@ export async function streamRequest(
   const reader = ndjsonStream(r.body).getReader();
 
   const results = [];
-  let c: chunk;
+  let c: Chunk<any>;
 
   try {
     while (true) {
@@ -123,7 +123,7 @@ export async function streamRequest(
       results.push(cb(c));
     }
   } catch (e) {
-    pi.done();
+    pi.abort();
     throw e;
   }
   return results;
