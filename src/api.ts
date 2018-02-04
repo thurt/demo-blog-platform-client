@@ -46,23 +46,23 @@ const ph: ProxyHandler<
   api.PostsApi | api.UsersApi | api.AuthApi | api.CommentsApi | api.SetupApi
 > = {
   get(target, name, receiver) {
-    return (...args: any[]) => {
+    return async (...args: any[]) => {
       pi.start();
-      //@ts-ignore
-      return target[name](...args)
-        .then((_: any) => {
-          if (!pi.done()) {
-            pi.inc();
-          }
-          return _;
-        })
-        .catch((_: any) => {
-          pi.abort();
-          return Promise.reject(_);
-        });
+      try {
+        //@ts-ignore
+        const r = await target[name](...args);
+        if (!pi.done()) {
+          pi.inc();
+        }
+        return r;
+      } catch (e) {
+        pi.abort();
+        throw e;
+      }
     };
   },
 };
+
 export const basePath = '/api';
 export const posts = new Proxy(
   new api.PostsApi(undefined, basePath),
@@ -111,8 +111,9 @@ export async function streamRequest(
 
   const results = [];
   let c: chunk;
-  while (true) {
-    try {
+
+  try {
+    while (true) {
       c = await reader.read();
       if (c.done) {
         pi.done();
@@ -120,10 +121,10 @@ export async function streamRequest(
       }
       pi.inc();
       results.push(cb(c));
-    } catch (e) {
-      pi.done();
-      throw e;
     }
+  } catch (e) {
+    pi.done();
+    throw e;
   }
   return results;
 }
