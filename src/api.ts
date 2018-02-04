@@ -13,6 +13,29 @@ const maybeStartProgressIndicator = () => {
   }
 };
 
+const maybeDoneProgressIndicator = () => {
+  if (--activeReqs === 0) {
+    nprogress.done();
+    return true;
+  }
+  return false;
+};
+const maybeAbortProgressIndicator = () => {
+  if (--activeReqs === 0) {
+    nprogress.done();
+    nprogress.remove();
+    return true;
+  }
+  return false;
+};
+const maybeIncProgressIndicator = () => {
+  if (nprogress.isStarted()) {
+    nprogress.inc();
+    return true;
+  }
+  return false;
+};
+
 const ph: ProxyHandler<
   api.PostsApi | api.UsersApi | api.AuthApi | api.CommentsApi | api.SetupApi
 > = {
@@ -22,18 +45,13 @@ const ph: ProxyHandler<
       //@ts-ignore
       return target[name](...args)
         .then((_: any) => {
-          if (--activeReqs === 0) {
-            nprogress.done();
-          } else if (nprogress.isStarted()) {
-            nprogress.inc();
+          if (!maybeDoneProgressIndicator()) {
+            maybeIncProgressIndicator();
           }
           return _;
         })
         .catch((_: any) => {
-          if (--activeReqs === 0) {
-            nprogress.done();
-            nprogress.remove();
-          }
+          maybeAbortProgressIndicator();
           return Promise.reject(_);
         });
     };
@@ -88,17 +106,18 @@ export async function streamRequest(
   const results = [];
   let c: chunk;
   while (true) {
-    c = await reader.read(); // i think this could throw; need to try catch here so can handle the nprogress for streamRequests
-    if (c.done) {
-      if (--activeReqs === 0) {
-        nprogress.done();
+    try {
+      c = await reader.read();
+      if (c.done) {
+        maybeDoneProgressIndicator();
+        break;
       }
-      break;
+      maybeIncProgressIndicator();
+      results.push(cb(c));
+    } catch (e) {
+      maybeDoneProgressIndicator();
+      throw e;
     }
-    if (nprogress.isStarted()) {
-      nprogress.inc();
-    }
-    results.push(cb(c));
   }
   return results;
 }
