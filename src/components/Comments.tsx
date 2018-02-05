@@ -48,20 +48,26 @@ export class Comments extends React.Component<Props, State> {
     return async (e: React.SyntheticEvent<HTMLButtonElement>) => {
       e.preventDefault();
       if (window.confirm('Are you sure you want to delete this comment?')) {
-        await comments.deleteComment(
-          {id},
-          {
-            headers: {
-              Authorization: `Bearer ${window.app.state.authUser.access_token}`,
+        try {
+          await comments.deleteComment(
+            {id},
+            {
+              headers: {
+                Authorization: `Bearer ${
+                  window.app.state.authUser.access_token
+                }`,
+              },
             },
-          },
-        );
-        window.Notify.addNotification({
-          title: 'Success!',
-          message: 'Your comment was deleted',
-          level: 'success',
-        });
-        this.componentDidMount(); // update comments list
+          );
+          window.Notify.addNotification({
+            title: 'Success!',
+            message: 'Your comment was deleted',
+            level: 'success',
+          });
+          this.componentDidMount(); // update comments list
+        } catch (e) {
+          error.Handle(e);
+        }
       }
     };
   }
