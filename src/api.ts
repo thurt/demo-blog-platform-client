@@ -98,7 +98,7 @@ export type Chunk<T> = {
 
 export async function streamRequest(
   path: string,
-  cb: (c: Chunk<any>) => void,
+  cb: (c: Chunk<any>) => any,
 ): Promise<Array<any>> {
   pi.start();
 

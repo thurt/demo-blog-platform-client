@@ -21,25 +21,22 @@ export class User extends React.Component<{}, State> {
     const path = window.location.pathname;
     const id = path.replace(/\/users\//, '');
     try {
-      await Promise.all([
+      const [_, streamResults] = await Promise.all([
         users.getUser({id}).then(user => this.setState({user})),
         streamRequest(
           basePath + path + '/comments',
           async (cc: Chunk<{result: CmsComment}>) => {
             const c = cc.value.result;
-            try {
-              const p = await posts.getPost({id: Number(c.post_id)});
-              this.setState({
-                comments: (this.state.comments || []).concat(c),
-                posts: {...this.state.posts, [p.id]: p},
-              });
-            } catch (e) {
-              error.Handle(e);
-            }
+            const p = await posts.getPost({id: Number(c.post_id)});
+            this.setState({
+              comments: (this.state.comments || []).concat(c),
+              posts: {...this.state.posts, [p.id]: p},
+            });
           },
-        ).then(results => Promise.all(results)),
+        ),
       ]);
-      // will be true when have finished fetching comments and there were no comments
+      await Promise.all(streamResults);
+      // will be true when there are no comments
       if (this.state.comments === undefined) {
         this.setState({comments: []});
       }
