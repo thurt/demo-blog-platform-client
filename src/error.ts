@@ -14,7 +14,9 @@ export function Handle(e: Error | Response) {
   if (e instanceof Error) {
     console.error(e);
     notifyGenericServerErr();
+    return;
   }
+
   if (e instanceof Response) {
     e
       .json()
