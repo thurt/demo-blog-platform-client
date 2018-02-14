@@ -24,14 +24,27 @@ export function Handle(e: Error | Response) {
           return;
         }
 
-        window.Notify.addNotification({
-          // in http/1.1, the Response.statusText  is included, however http/2 no longer includes
-          // a status phrase so Response.statusText is always empty string
-          // see https://github.com/http2/http2-spec/issues/202
-          title: status.getStatusText(e.status),
-          message: apie.error,
-          level: 'error',
-        });
+        if (typeof apie.error === 'string') {
+          window.Notify.addNotification({
+            // in http/1.1, the Response.statusText  is included, however http/2 no longer includes
+            // a status phrase so Response.statusText is always empty string
+            // see https://github.com/http2/http2-spec/issues/202
+            title: status.getStatusText(e.status),
+            message: apie.error,
+            level: 'error',
+          });
+        } else if (typeof apie.error === 'object') {
+          window.Notify.addNotification({
+            // in http/1.1, the Response.statusText  is included, however http/2 no longer includes
+            // a status phrase so Response.statusText is always empty string
+            // see https://github.com/http2/http2-spec/issues/202
+            title: status.getStatusText(e.status),
+            message: apie.error.message,
+            level: 'error',
+          });
+        } else {
+          throw 'Unrecognized api.error type';
+        }
 
         // redirects to Login when token is invalid
         if (e.status === status.UNAUTHORIZED) {
