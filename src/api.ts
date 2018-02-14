@@ -10,7 +10,11 @@ class ProgressIndicator {
   start() {
     if (this.activeReqs++ === 0) {
       setTimeout(() => {
-        if (this.activeReqs !== 0 && !nprogress.isStarted()) {
+        if (
+          this.activeReqs !== 0 &&
+          !nprogress.isStarted() &&
+          window.navigator.onLine
+        ) {
           nprogress.start();
         }
       }, 500);
@@ -24,7 +28,7 @@ class ProgressIndicator {
     return false;
   }
   abort() {
-    if (--this.activeReqs === 0) {
+    if (--this.activeReqs === 0 || !window.navigator.onLine) {
       nprogress.done();
       nprogress.remove();
       return true;
