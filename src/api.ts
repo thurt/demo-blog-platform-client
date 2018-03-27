@@ -47,7 +47,12 @@ class ProgressIndicator {
 const pi = new ProgressIndicator();
 
 const ph: ProxyHandler<
-  api.PostsApi | api.UsersApi | api.AuthApi | api.CommentsApi | api.SetupApi
+  | api.PostsApi
+  | api.UsersApi
+  | api.AuthApi
+  | api.CommentsApi
+  | api.SetupApi
+  | api.RegisterApi
 > = {
   get(target, name, receiver) {
     return async (...args: any[]) => {
@@ -88,6 +93,10 @@ export const setup = new Proxy(
   new api.SetupApi(undefined, basePath),
   ph,
 ) as api.SetupApi;
+export const register = new Proxy(
+  new api.RegisterApi(undefined, basePath),
+  ph,
+) as api.RegisterApi;
 
 // Error is the interface returned by the api in the response body when a request error has occurred. Common examples of request errors that would cause the server to respond with an Error would be when the the request contains invalid or missing values, or when a request is made for a non-existant entity.
 export type Error = UnaryError | StreamError;
