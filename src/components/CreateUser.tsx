@@ -85,10 +85,10 @@ export class CreateUser extends React.Component<{}, State> {
     return (
       <Page>
         <h2>Create User</h2>
-        <hr />
-        <h3>{`Step ${this.state.step + 1} of ${this.state.steps.length} - ${
+        <hr style={{width: '100%'}} />
+        <h4>{`Step ${this.state.step + 1} of ${this.state.steps.length} - ${
           step.title
-        }`}</h3>
+        }`}</h4>
         <p>{step.instructions}</p>
         {step.Form}
       </Page>
