@@ -50,8 +50,7 @@ export class Login extends React.Component<{}, {}> {
 
   render() {
     return (
-      <Page>
-        <h2>Login</h2>
+      <Page title="Login">
         <form
           style={{
             display: 'flex',

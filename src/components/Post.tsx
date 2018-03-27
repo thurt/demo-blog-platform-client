@@ -38,10 +38,9 @@ export class Post extends React.Component<{}, State> {
     const p = this.state.post;
     const id = this.state.pid;
     return (
-      <Page>
+      <Page title={(p && p.title) || ''}>
         {p ? (
           <div style={{width: '100%'}}>
-            <h2 style={{wordBreak: 'break-word'}}>{p.title}</h2>
             <h4>
               {date.GMT(p.created).toDateString()}
               <br />
@@ -51,7 +50,6 @@ export class Post extends React.Component<{}, State> {
                 </em>
               ) : null}
             </h4>
-            <hr />
             <div
               style={{wordBreak: 'break-word', fontSize: '14pt'}}
               dangerouslySetInnerHTML={{__html: p.content}}

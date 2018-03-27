@@ -36,8 +36,7 @@ export class Setup extends React.Component<{}, {}> {
 
   render() {
     return (
-      <Page>
-        <h2>Setup Admin account</h2>
+      <Page title="Setup Admin account">
         <p>
           {
             'Since this is your first time accessing your blog, you will first need to create an admin account. Please choose your id and password.'

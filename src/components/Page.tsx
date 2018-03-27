@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export function Page(props: {children: any}) {
+export function Page(props: {children: any; title: string}) {
   return (
     <main
       style={{
@@ -12,6 +12,8 @@ export function Page(props: {children: any}) {
         maxWidth: '1024px',
         alignSelf: 'center',
       }}>
+      <h2 style={{wordBreak: 'break-word'}}>{props.title}</h2>
+      <hr style={{width: '100%'}} />
       {props.children}
     </main>
   );

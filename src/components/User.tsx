@@ -93,8 +93,7 @@ export class User extends React.Component<{}, State> {
     const cs = this.state.comments;
     const ps = this.state.posts;
     return (
-      <Page>
-        <h2>User Profile</h2>
+      <Page title="User Profile">
         {u ? (
           <div>
             <div

@@ -4,8 +4,7 @@ import {Page} from './Page';
 export class NotFound extends React.Component<{}, {}> {
   render() {
     return (
-      <Page>
-        <h2>Not Found</h2>
+      <Page title="Not Found">
         <p>
           {'The provided path "' +
             window.location.pathname +

@@ -83,9 +83,7 @@ export class CreateUser extends React.Component<{}, State> {
   render() {
     const step = this.state.steps[this.state.step];
     return (
-      <Page>
-        <h2>Create User</h2>
-        <hr style={{width: '100%'}} />
+      <Page title="Create User">
         <h4>{`Step ${this.state.step + 1} of ${this.state.steps.length} - ${
           step.title
         }`}</h4>

@@ -32,7 +32,7 @@ export class Home extends React.Component<{}, {}> {
 
   render() {
     return (
-      <Page>
+      <Page title="Recent Posts">
         {window.app.state.isSetup === true ? (
           <RecentPosts />
         ) : null}
