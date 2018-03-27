@@ -48,8 +48,11 @@ export function Handle(e: Error | Response) {
           throw 'Unrecognized api.error type';
         }
 
-        // redirects to Login when token is invalid
-        if (e.status === status.UNAUTHORIZED) {
+        // redirects to Login when token is invalid (unless already on the login screen)
+        if (
+          e.status === status.UNAUTHORIZED &&
+          !window.location.pathname.includes('/login')
+        ) {
           window.app.pushState(
             {authUser: undefined},
             `/login?referrer=${window.location.pathname}`,
