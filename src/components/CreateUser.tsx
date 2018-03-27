@@ -3,7 +3,7 @@ import {users, register} from '../api';
 import * as error from '../error';
 import * as form from '../form';
 import {CmsCreateUserRequest} from 'cms-client-api';
-import {CreateUserForm} from './CreateUserForm';
+import {RegisterNewUserForm} from './RegisterNewUserForm';
 import {VerifyNewUserForm} from './VerifyNewUserForm';
 import {Page} from './Page';
 
@@ -30,7 +30,7 @@ export class CreateUser extends React.Component<{}, State> {
           title: 'Register for User Account',
           instructions:
             'Enter your desired username and password. Note that a valid email address is required to complete registration. Please feel free to use a temporary email address from mailinator.com for this demo.',
-          Form: <CreateUserForm submit={this.handleSubmit} />,
+          Form: <RegisterNewUserForm submit={this.handleSubmit} />,
         },
         {
           title: 'Verify your Email Address',

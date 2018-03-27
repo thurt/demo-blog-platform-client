@@ -2,7 +2,7 @@ import * as React from 'react';
 import {auth, setup} from '../api';
 import * as error from '../error';
 import * as form from '../form';
-import {CreateUserForm} from './CreateUserForm';
+import {RegisterNewUserForm} from './RegisterNewUserForm';
 import {Page} from './Page';
 
 export class Setup extends React.Component<{}, {}> {
@@ -43,7 +43,7 @@ export class Setup extends React.Component<{}, {}> {
             'Since this is your first time accessing your blog, you will first need to create an admin account. Please choose your id and password.'
           }
         </p>
-        <CreateUserForm submit={this.handleSubmit} />
+        <RegisterNewUserForm submit={this.handleSubmit} />
       </Page>
     );
   }

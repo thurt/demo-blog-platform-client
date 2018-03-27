@@ -9,7 +9,7 @@ export type Props = {
   ) => Promise<boolean>;
 };
 
-export class CreateUserForm extends React.Component<Props, {}> {
+export class RegisterNewUserForm extends React.Component<Props, {}> {
   constructor(p: Props) {
     super(p);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -80,11 +80,7 @@ export class CreateUserForm extends React.Component<Props, {}> {
         <label>Repeat Password: </label>
         <input name="repeat_password" type="password" required />
 
-        <input
-          className="btn btn-primary"
-          type="submit"
-          value="Create Account"
-        />
+        <input className="btn btn-primary" type="submit" value="Register" />
       </form>
     );
   }
