@@ -1,10 +1,15 @@
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
-    filename: 'bundle.js',
+    filename: '[name].[chunkhash].js',
     path: __dirname + '/deploy/dist',
+    publicPath: '/dist',
   },
 
   //Enable sourcemaps for debugging webpack's output
@@ -21,16 +26,27 @@ module.exports = {
       {test: /\.tsx?$/, loader: 'awesome-typescript-loader'},
       //all output '.js' files will have any sourcemaps re-processed by 'source-map-loader'
       {enforce: 'pre', test: /\.js$/, loader: 'source-map-loader'},
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader',
+        }),
+      },
     ],
   },
 
   plugins: [
+    new CleanWebpackPlugin(['deploy']),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+    }),
+    new HtmlWebpackPlugin({
+      filename: '../index.html',
+      template: './src/index.template.html',
+    }),
+    new ExtractTextPlugin('[name].[contenthash].css'),
     new CopyWebpackPlugin([
-      {
-        from: './src/index.html',
-        to: '../index.html',
-      },
-      {from: './src/styles', to: '../styles'},
       {from: './node_modules/demo-mvvm-note-app/dist', to: '../editor'},
     ]),
   ],
