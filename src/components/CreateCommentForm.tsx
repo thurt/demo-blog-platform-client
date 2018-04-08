@@ -5,9 +5,9 @@ import * as form from '../form';
 import {CmsCreateCommentRequest, CmsAccessToken} from 'cms-client-api';
 
 type Props = {
-  user_id: CmsCreateCommentRequest['user_id'];
-  post_id: CmsCreateCommentRequest['post_id'];
-  access_token: CmsAccessToken['access_token'];
+  userId: CmsCreateCommentRequest['userId'];
+  postId: CmsCreateCommentRequest['postId'];
+  accessToken: CmsAccessToken['accessToken'];
   createdComment: () => void;
 };
 
@@ -33,15 +33,15 @@ export class CreateCommentForm extends React.Component<Props, {}> {
 
     const r: CmsCreateCommentRequest = {
       content: c,
-      user_id: this.props.user_id,
-      post_id: this.props.post_id,
+      userId: this.props.userId,
+      postId: this.props.postId,
     };
 
     try {
       // submit values
       await comments.createComment(
         {body: r},
-        {headers: {Authorization: `Bearer ${this.props.access_token}`}},
+        {headers: {Authorization: `Bearer ${this.props.accessToken}`}},
       );
       window.Notify.addNotification({
         title: 'Success!',

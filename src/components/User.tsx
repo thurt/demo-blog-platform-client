@@ -27,7 +27,7 @@ export class User extends React.Component<{}, State> {
           basePath + path + '/comments',
           async (cc: Chunk<{result: CmsComment}>) => {
             const c = cc.value.result;
-            const p = await posts.getPost({id: Number(c.post_id)});
+            const p = await posts.getPost({id: Number(c.postId)});
             this.setState({
               comments: (this.state.comments || []).concat(c),
               posts: {...this.state.posts, [p.id]: p},
@@ -69,7 +69,7 @@ export class User extends React.Component<{}, State> {
             {
               headers: {
                 Authorization: `Bearer ${
-                  window.app.state.authUser.access_token
+                  window.app.state.authUser.accessToken
                 }`,
               },
             },
@@ -125,7 +125,7 @@ export class User extends React.Component<{}, State> {
               <li>Role: {u.role}</li>
               <li>Member Since: {date.GMT(u.created).toLocaleDateString()}</li>
               <li>
-                Last Active: {date.GMT(u.last_active).toLocaleDateString()}
+                Last Active: {date.GMT(u.lastActive).toLocaleDateString()}
               </li>
             </ul>
           </div>
@@ -147,15 +147,15 @@ export class User extends React.Component<{}, State> {
                     <br />
                     {'in '}
                     <a
-                      href={`/posts/${c.post_id}/${ps[Number(c.post_id)].slug}`}
+                      href={`/posts/${c.postId}/${ps[Number(c.postId)].slug}`}
                       onClick={e => {
                         e.preventDefault();
                         window.app.pushState(
                           {},
-                          `/posts/${c.post_id}/${ps[Number(c.post_id)].slug}`,
+                          `/posts/${c.postId}/${ps[Number(c.postId)].slug}`,
                         );
                       }}>
-                      {ps[Number(c.post_id)].title}
+                      {ps[Number(c.postId)].title}
                     </a>
                   </em>
                 </h5>

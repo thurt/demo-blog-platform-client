@@ -44,9 +44,9 @@ export class Post extends React.Component<{}, State> {
             <h4>
               {date.GMT(p.created).toDateString()}
               <br />
-              {date.isGtDay(date.GMT(p.created), date.GMT(p.last_edited)) ? (
+              {date.isGtDay(date.GMT(p.created), date.GMT(p.lastEdited)) ? (
                 <em style={{fontWeight: 'normal', fontSize: 'smaller'}}>
-                  (edited: {date.GMT(p.last_edited).toDateString()})
+                  (edited: {date.GMT(p.lastEdited).toDateString()})
                 </em>
               ) : null}
             </h4>
@@ -61,9 +61,9 @@ export class Post extends React.Component<{}, State> {
         <h4>Join the discussion</h4>
         {window.app.state.authUser && window.app.state.authUser.id ? (
           <CreateCommentForm
-            user_id={window.app.state.authUser.id}
-            post_id={id}
-            access_token={window.app.state.authUser.access_token}
+            userId={window.app.state.authUser.id}
+            postId={id}
+            accessToken={window.app.state.authUser.accessToken}
             createdComment={() =>
               this.setState({
                 refreshComments: this.state.refreshComments + 1,

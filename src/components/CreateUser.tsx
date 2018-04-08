@@ -57,10 +57,7 @@ export class CreateUser extends React.Component<{}, State> {
   async handleSubmit1(r: {token: string}) {
     try {
       // submit values
-      await register.verifyNewUser(
-        {body: {}},
-        {headers: {Authorization: `Bearer ${r.token}`}},
-      );
+      await register.verifyNewUser({body: {token: r.token}});
       window.Notify.addNotification({
         title: 'Success!',
         message: 'New user created',

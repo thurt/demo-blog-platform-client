@@ -54,7 +54,7 @@ export class Comments extends React.Component<Props, State> {
             {
               headers: {
                 Authorization: `Bearer ${
-                  window.app.state.authUser.access_token
+                  window.app.state.authUser.accessToken
                 }`,
               },
             },
@@ -90,18 +90,18 @@ export class Comments extends React.Component<Props, State> {
                   </em>
                   <br />
                   <a
-                    href={`/users/${c.user_id}`}
+                    href={`/users/${c.userId}`}
                     onClick={e => {
                       e.preventDefault();
-                      window.app.pushState({}, `/users/${c.user_id}`);
+                      window.app.pushState({}, `/users/${c.userId}`);
                     }}>
-                    {c.user_id}
+                    {c.userId}
                   </a>{' '}
                   wrote...
                 </h4>
                 <p>{c.content}</p>
                 {window.app.state.authUser &&
-                (window.app.state.authUser.id === c.user_id ||
+                (window.app.state.authUser.id === c.userId ||
                   window.app.state.authUser.role === 'ADMIN') ? (
                   <p style={{fontSize: 'smaller'}}>
                     <button onClick={this.deleteComment(c.id)}>
