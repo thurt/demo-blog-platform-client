@@ -7,6 +7,7 @@ import {CreateCommentForm} from './CreateCommentForm';
 import {Page} from './Page';
 import * as date from '../date';
 import * as showdown from 'showdown';
+import './Post.css';
 
 type State = {
   post: CmsPost;
@@ -54,7 +55,8 @@ export class Post extends React.Component<{}, State> {
               ) : null}
             </h4>
             <div
-              style={{wordBreak: 'break-word', fontSize: '14pt'}}
+              style={{wordBreak: 'break-word', fontSize: 'larger'}}
+              className="maxWidthChildren"
               dangerouslySetInnerHTML={{__html: converter.makeHtml(p.content)}}
             />
           </div>
