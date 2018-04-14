@@ -6,12 +6,15 @@ import {Comments} from './Comments';
 import {CreateCommentForm} from './CreateCommentForm';
 import {Page} from './Page';
 import * as date from '../date';
+import * as showdown from 'showdown';
 
 type State = {
   post: CmsPost;
   refreshComments: number;
   pid: CmsPost['id'];
 };
+
+const converter = new showdown.Converter();
 
 export class Post extends React.Component<{}, State> {
   constructor(props: {}) {
@@ -52,7 +55,7 @@ export class Post extends React.Component<{}, State> {
             </h4>
             <div
               style={{wordBreak: 'break-word', fontSize: '14pt'}}
-              dangerouslySetInnerHTML={{__html: p.content}}
+              dangerouslySetInnerHTML={{__html: converter.makeHtml(p.content)}}
             />
           </div>
         ) : null}
