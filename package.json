@@ -32,7 +32,9 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "test": "echo \"no tests specified\" && exit 0"
+    "test": "echo \"no tests specified\" && exit 0",
+    "link-deps": "npm link cms-client-api && npm link demo-mvvm-note-app",
+    "unlink-deps": "npm i"
   },
   "author": "thurt",
   "license": "ISC",
