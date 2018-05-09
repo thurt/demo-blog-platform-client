@@ -4,7 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "can-ndjson-stream": "^0.1.7",
-    "cms-client-api": "github:thurt/cms-client-api",
+    "cms-client-api": "github:thurt/cms-client-api#4c4b5",
     "demo-mvvm-note-app": "github:thurt/demo-mvvm-note-app#posts-model",
     "http-status-codes": "^1.3.0",
     "nprogress": "^0.2.0",
